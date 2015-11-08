@@ -1,12 +1,13 @@
 (*
-NOTE FROM ZIYI TO ZICHEN & QI 11/07/2015:
+scanner.mll - updated 10:25PM 11/07/2015
+NOTE FROM ZIYI TO ZICHEN & QI 11/07/2015: 
 ADD:
-%token <int> INTEGER
-%token <float> FLOAT
-%token <char> CHAR
-%token <bool> BOOL
-%token <string> STRING
-%token <string> ID
+%token <int> INTEGERLIT
+%token <float> FLOATLIT
+%token <char> CHARLIT
+%token <bool> BOOLLIT
+%token <string> STRINGLIT
+%token <string> IDLIT
 TO parser.mly
 *)
 
@@ -55,21 +56,21 @@ rule token = parse
 | eof { EOF } (* End of file *)
 
 (* Integers *)
-| ['0' - '9']+ as lxm { INTEGER(int_of_string lxm) } 
+| ['0' - '9']+ as lxm { INTEGERLIT(int_of_string lxm) } 
 
 (* Float *)
-| ['-' '+']?['0'-'9']*'.'['0'-'9']+ ('e'['+' '-']?['0'-'9']+)? as flo {FLOAT(float_of_string flo)}
-| ['-' '+']?['0'-'9']+'.'['0'-'9']* ('e'['+' '-']?['0'-'9']+)? as flo {FLOAT(float_of_string flo)}
-| ['-' '+']?['0'-'9']+ ('e'['+' '-']?['0'-'9']+) as flo {FLOAT(float_of_string flo)}
+| ['-' '+']?['0'-'9']*'.'['0'-'9']+ ('e'['+' '-']?['0'-'9']+)? as flo {FLOATLIT(float_of_string flo)}
+| ['-' '+']?['0'-'9']+'.'['0'-'9']* ('e'['+' '-']?['0'-'9']+)? as flo {FLOATLIT(float_of_string flo)}
+| ['-' '+']?['0'-'9']+ ('e'['+' '-']?['0'-'9']+) as flo {FLOATLIT(float_of_string flo)}
 
 (* Char *)
-| '''(['\000' - '\127'] as chr)''' {CHAR(chr)}
+| '''(['\000' - '\127'] as chr)''' {CHARLIT(chr)}
 
 (* Bool *)
-| ["true" "false"] as bl {BOOL(bool_of_string bl)}
+| ["true" "false"] as bl {BOOLLIT(bool_of_string bl)}
 
 (* String *)
-| '"'(['\000' - '\127']* as str)'"' {STRING(str)}
+| '"'(['\000' - '\127']* as str)'"' {STRINGLIT(str)}
 
 (* ID *)
 | ['a' - 'z' 'A' - 'Z']['a' - 'z' 'A' - 'Z' '0' - '9' '_']* as lxm { ID(lxm) }
