@@ -7,7 +7,6 @@ ADD:
 %token <char> CHARLIT
 %token <bool> BOOLLIT
 %token <string> STRINGLIT
-%token <string> IDLIT
 TO parser.mly
 *)
 
@@ -25,7 +24,7 @@ rule token = parse
 | '[' { LSQUAR } | ']' { RSQUAR } (* Square brackets *)
 | ';' { SEMI }   | ':' { COLON } 
 | '.' {GET}		 | ',' { COMMA }
-| '=' { ASSIGN }
+| '=' { ASSIGN } | '@' { AT }
 
 (* Arithmetic operators *)
 | '+' { PLUS }   | '-' { MINUS }
