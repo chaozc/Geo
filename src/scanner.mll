@@ -1,13 +1,17 @@
 (*
-scanner.mll - updated 10:25PM 11/07/2015
-NOTE FROM ZIYI TO ZICHEN & QI 11/07/2015: 
-ADD:
-%token <int> INTEGERLIT
-%token <float> FLOATLIT
-%token <char> CHARLIT
-%token <bool> BOOLLIT
-%token <string> STRINGLIT
-TO parser.mly
+scanner.mll - updated 11:25AM 11/09/2015
+NOTE FROM ZIYI TO ZICHEN & QI 11/09/2015: 
+REMOVE '@' AS A TOKEN
+ADD
+| "@end" {ENDOFPROGRAM}
+| '@'(['a' - 'z' 'A' - 'Z']+ as pre) {PRESET(pre)}
+TO RECOGNIZE A PRESET
+THEREFORE WE NEED TO ADD
+%token <string> PRESET
+%token ENDOFPROGRAM
+in parser.mly
+IN PARSER, THE PROCESSING SUGGESTION IS:
+PRESET ID {Preset($1,$2)}
 *)
 
 { open Parser } (* Get the token types *)
@@ -24,7 +28,7 @@ rule token = parse
 | '[' { LSQUAR } | ']' { RSQUAR } (* Square brackets *)
 | ';' { SEMI }   | ':' { COLON } 
 | '.' {GET}		 | ',' { COMMA }
-| '=' { ASSIGN } | '@' { AT }
+| '=' { ASSIGN } (* | '@' { AT } *)
 
 (* Arithmetic operators *)
 | '+' { PLUS }   | '-' { MINUS }
@@ -74,6 +78,10 @@ rule token = parse
 (* ID *)
 | ['a' - 'z' 'A' - 'Z']['a' - 'z' 'A' - 'Z' '0' - '9' '_']* as lxm { ID(lxm) }
 | _ as char { raise (Failure("illegal character " ^ Char.escaped char)) }
+
+(* Preset *)
+| "@end" {ENDOFPROGRAM}
+| '@'(['a' - 'z' 'A' - 'Z']+ as pre) {PRESET(pre)}
 
 and comment = parse
 	"*/" { token lexbuf } (* Endofcomment*)
