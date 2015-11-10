@@ -1,15 +1,26 @@
-//std.glib
+/**************************************
+  Standard library of Geo
+  file name: std.glib
+  Preread by Geo compiler each time 
+  before compiling a Geo program.
+  Part a: System constant declaration
+  Pard b: System function declaration
+  Part c: Geometric function declaration
+  Current version: v0.1
+  Modification time: 11/09/2015
+**************************************/
+
 //part a: System constant declaration
 
 PI = 3.14159;
 
 //part b: System function declaration
 
-function print(info:int const, ...);
-function print(info:float const, ...);
-function print(info:char const, ...);
-function print(info:bool const, ...);
-function print(info:string const, ...);
+function print(info:int const, ...):void;
+function print(info:float const, ...):void;
+function print(info:char const, ...):void;
+function print(info:bool const, ...):void;
+function print(info:string const, ...):void;
 
 function int_to_string(input:int):string;
 function float_to_string(input:float):string;
@@ -24,13 +35,14 @@ model runset:
 	times_of_run:int;
 	shape[]:geometricShape;
 	runpara[]:char;
-runset(times_of_run:int, g1:geometricShape,          run_para_g1:char, ...);
 	
-	function refresh();
+	runset(times_of_run:int, g1:geometricShape, run_para_g1:char, ...);
+	
+	function refresh():void;
 	function addElement():bool;
 	function removeElement(g:geometricShape,para:char):bool;
-	function enableRun();
-	function disableRun();
+	function enableRun():void;
+	function disableRun():void;
 
 end
 
@@ -57,7 +69,7 @@ model dot:
 	function distance(dot1:dot const):float;
 	function distance(line1:line const):float;
 
-	function setRunstep(val:float,pos:char);
+	function setRunstep(val:float,pos:char):void;
 	function getRunstep(pos:char const):float;
 
 end
@@ -87,7 +99,7 @@ model line:
 	//If endPointset = false, return [0,0]
 	function getMidpoint():dot;
 
-	function setRunstep(val:float,pos:char);
+	function setRunstep(val:float,pos:char):void;
 	function getRunstep(pos:char char):float;
 
 	function intersect(polygon1:polygon const):float[];
@@ -108,7 +120,7 @@ model circle:
 
 	circle(center:dot,radius:float);
 
-	function setRunstep(val:float,pos:char);
+	function setRunstep(val:float,pos:char):void;
 	function getRunstep(pos:char):float;
 
 	function getCenter():dot;
@@ -132,7 +144,7 @@ model polygons:
 
 	polygons(num_of_apex:int,apex[]:dot);
 
-	function setRunstep(val:float,pos:char);
+	function setRunstep(val:float,pos:char):void;
 	function getRunstep(pos:char):float;
 
 	function getCenter():dot;
