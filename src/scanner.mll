@@ -42,20 +42,20 @@ rule token = parse
 | ">=" { GEQ }	 | '!' {NOT}	
 | '&' {AND}		 | '|' {OR}
 
-(* Keywords (totally 23) *)
-| "bool" { BOOL }  		| "break" { BREAK }
-| "char" { CHAR }  		| "const" { CONST }
-| "dot"  { DOT }   		| "elif" { ELIF }
+(* Keywords (totally 23) *) 		
 | "else" { ELSE } 		| "end" { END }
-| "float" { FLOAT }		| "for" { FOR }
+| "for" { FOR }			| "elif" { ELIF }
 | "function" {FUNCTION}	| "if" { IF }
 | "import" { IMPORT } 	| "in" { IN }
-| "int" { INT }  		| "list" { LIST }
+| "list" { LIST }		| "break" { BREAK }
 | "model" {MODEL}		| "return" { RETURN }
-| "run" {RUN}			| "string" { STRING }
-| "submodel" {SUBMODEL}	| "void" { VOID }
+| "run" {RUN}			| "const" { CONST }
+| "submodel" {SUBMODEL}	
 | "while" { WHILE }
 
+|("int"|"float"|"dot"|"void"|"bool"|"char"|"string") as tp {TYPE(tp)} (* Type *)
+
+| "print" {PRINT}
 | eof { EOF } (* End of file *)
 
 (* Integers *)
