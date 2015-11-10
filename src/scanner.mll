@@ -53,7 +53,7 @@ rule token = parse
 | "submodel" {SUBMODEL}	
 | "while" { WHILE }
 
-|("int"|"float"|"dot"|"void"|"bool"|"char"|"string") as tp {TYPE(tp)} (* Type *)
+| ("int"|"float"|"dot"|"void"|"bool"|"char"|"string") as tp {TYPE(tp)} (* Type *)
 
 | "print" {PRINT}
 | eof { EOF } (* End of file *)
@@ -70,7 +70,7 @@ rule token = parse
 | '''(['\000' - '\127'] as chr)''' {CHARLIT(chr)}
 
 (* Bool *)
-| ["true" "false"] as bl {BOOLLIT(bool_of_string bl)}
+| ("true"|"false") as bl {BOOLLIT(bool_of_string bl)}
 
 (* String *)
 | '"'(['\000' - '\127']* as str)'"' {STRINGLIT(str)}
