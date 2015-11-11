@@ -1,0 +1,54 @@
+-----------------------------
+
+Geo grammar adjustment log
+
+-----------------------------
+
+10/24/2015
+Corresponding language reference manual version:
+v1.0
+Modification:
+None
+Description:
+Original Geo reference manual
+
+-----------------------------
+
+11/07/2015
+Corresponding language reference manual version:
+v1.1
+Modification:
+Adjust the declaration/definition of functions;
+Increase keyword "void".
+Description:
+functions without a return value has now been required to add ":void" in function declaration/definition:
+//function declaration
+function func_name(parameter:parameter_type,...):void;
+//function definition
+function func_name(parameter:parameter_type,...):void:
+//function statements
+end
+
+void is added as a new keyword in Geo.
+
+-----------------------------
+
+11/11/2015
+Corresponding language reference manual version:
+#Draft# v1.2
+Modification:
+Adjust the statement of for-loop;
+#Draft# Adjust the statement of if-statment;
+Description:
+Remove the data type declaration of the parameter in the statement and change for-loop from:
+for element:element_data_type in set:
+//statement;
+end
+
+to
+
+for element in set:
+//statement;
+end
+
+#Draft# Remove elif keyword from if-statement
