@@ -7,6 +7,7 @@
 %token PRINT
 %token ENDOFPROGRAM
 %token EOF
+
 %token <int> INTEGERLIT
 %token <float> FLOATLIT
 %token <char> CHARLIT
@@ -14,6 +15,7 @@
 %token <string> STRINGLIT
 %token <string> ID
 %token <string> PRESET
+
 
 %right ASSIGN
 %left EQ NEQ

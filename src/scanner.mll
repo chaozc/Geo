@@ -67,13 +67,13 @@ rule token = parse
 | ['-' '+']?['0'-'9']+ ('e'['+' '-']?['0'-'9']+) as flo {FLOATLIT(float_of_string flo)}
 
 (* Char *)
-| '''(['\000' - '\127'] as chr)''' {CHARLIT(chr)}
+| '''(['\000' - '\038' '\040' - '\127'] as chr)''' {CHARLIT(chr)}
 
 (* Bool *)
 | ("true"|"false") as bl {BOOLLIT(bool_of_string bl)}
 
 (* String *)
-| '"'(['\000' - '\127']* as str)'"' {STRINGLIT(str)}
+| '"'(['\000' - '\033' '\035' - '\127']* as str)'"' {STRINGLIT(str)}
 
 (* ID *)
 | ['a' - 'z' 'A' - 'Z']['a' - 'z' 'A' - 'Z' '0' - '9' '_']* as lxm { ID(lxm) }

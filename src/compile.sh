@@ -10,3 +10,9 @@ ocamlc -c scanner.ml # compile the scanner
 echo "ocamlc -c scanner.ml finished"
 ocamlc -c parser.ml # compile the parser
 echo "ocamlc -c parser.ml finished"
+ocamlc -c compile.ml # compile the compiler
+echo "ocamlc -c compile.ml finished"
+ocamlc -c geo.ml # compile geo
+echo "ocamlc -c geo.ml finished"
+ocamlc -o geo_oc parser.cmo scanner.cmo compile.cmo geo.cmo
+echo "ocamlc -o geo_oc parser.cmo scanner.cmo geo.cmo finished"
