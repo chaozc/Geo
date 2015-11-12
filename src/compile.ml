@@ -19,6 +19,13 @@ let rec enum stride n = function
 let string_map_pairs map pairs =
   List.fold_left (fun m (i, n) -> StringMap.add n i m) map pairs
 *)
+let prestring = ["import Tkinter as tk\n" ; 
+				 "root = tk.Tk()\n";
+				 "root.title(\"Geo\")\n";
+				 "msg = tk.Listbox(root, width=50, height=6)\n";
+				 "msg.grid(row=0, column=0)\n"]
+
+let finalstring = ["root.mainloop()"]
 
 let translate (declarations, statements) =
 	let rec string_of_expr = function
@@ -40,12 +47,15 @@ let translate (declarations, statements) =
 	      f ^ "(" ^ String.concat ", " (List.map string_of_expr el) ^ ")"
 	  | Noexpr -> ""
 	in
-	let rec string_of_stmt = function
-		Print(expr) -> "print " ^ (string_of_expr expr)
+	let string_of_stmt = function
+		Print(expr) -> "msg.insert(tk.END," ^ (string_of_expr expr) ^ ")"
 	in
 	let rec translate_stmts  = function
 		  [] -> ""
 		| hd::tl -> (string_of_stmt hd) ^ "\n" ^ (translate_stmts tl)
-	in translate_stmts (List.rev statements)
+	in
+	let tra = translate_stmts (List.rev statements) in 
+	(String.concat "" prestring) ^ tra ^ (String.concat "" finalstring)
+
 
 

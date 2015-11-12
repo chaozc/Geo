@@ -1,0 +1,12 @@
+import Tkinter as tk
+root = tk.Tk()
+root.title("Geo")
+msg = tk.Listbox(root, width=50, height=6)
+msg.grid(row=0, column=0)
+msg.insert(tk.END,"hello world1")
+msg.insert(tk.END,"hello world2")
+msg.insert(tk.END,'s')
+msg.insert(tk.END,1 + 1)
+msg.insert(tk.END,"dadaada")
+msg.insert(tk.END,"ddddaa")
+root.mainloop()
