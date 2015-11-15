@@ -28,7 +28,6 @@ type token =
   | OR
   | BREAK
   | CONST
-  | ELIF
   | ELSE
   | END
   | FOR
