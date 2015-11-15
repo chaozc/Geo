@@ -1,5 +1,13 @@
 open Ast
 
+let prestring = ["import Tkinter as tk\n" ; 
+				 "root = tk.Tk()\n";
+				 "root.title(\"Geo\")\n";
+				 "msg = tk.Listbox(root, width=50, height=10)\n";
+				 "msg.grid(row=0, column=0)\n"]
+
+let finalstring = ["root.mainloop()"]
+
 let translate (declarations, statements) =
 	let rec string_of_expr = function
 	    Int(l) -> string_of_int l
@@ -23,7 +31,7 @@ let translate (declarations, statements) =
 	in let addTab s = " " ^ s 
 	in let rec string_of_stmt = function
 		Expr(e) -> (string_of_expr e)  :: []
-	  | Print(e) -> ("print " ^ (string_of_expr e)) :: []
+	  | Print(expr) -> ("msg.insert(tk.END," ^ (string_of_expr expr) ^ ")") :: []
 	  | While(e, s) -> ("while (" ^ (string_of_expr e) ^ "):") ::
 	  	(List.map addTab (List.concat (List.rev (List.map string_of_stmt s))))
 	  | For(e1, e2, s) -> ("for " ^ (string_of_expr e1) ^ " in " ^ (string_of_expr e2) ^ ":")
@@ -47,5 +55,6 @@ let translate (declarations, statements) =
 	in let rec translate_funcs = function
 		  [] -> ""
 		| hd::tl -> (string_of_func hd) ^ "\n" ^ (translate_funcs tl)
-	in translate_funcs (List.rev declarations) ^ (String.concat "\n" (translate_stmts (List.rev statements)))
+	in let tra = translate_funcs (List.rev declarations) ^ (String.concat "\n" (translate_stmts (List.rev statements))) ^ "\n"
+	in (String.concat "" prestring) ^ tra ^ (String.concat "" finalstring)
 
