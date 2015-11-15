@@ -44,7 +44,7 @@ rule token = parse
 
 (* Keywords (totally 23) *) 		
 | "else" { ELSE } 		| "end" { END }
-| "for" { FOR }			| "elif" { ELIF }
+| "for" { FOR }			
 | "function" {FUNCTION}	| "if" { IF }
 | "import" { IMPORT } 	| "in" { IN }
 | "list" { LIST }		| "break" { BREAK }

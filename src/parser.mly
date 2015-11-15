@@ -2,7 +2,7 @@
 %token LPAREN RPAREN LBRACE RBRACE LSQUAR RSQUAR SEMI COLON GET COMMA ASSIGN AT
 %token PLUS MINUS TIMES DIVIDE PERCENT EXP
 %token EQ NEQ LT LEQ GT GEQ NOT	AND OR
-%token BREAK CONST ELIF ELSE END FOR FUNCTION IMPORT LIST MODEL RETURN RUN SUBMODEL WHILE IF IN
+%token BREAK CONST ELSE END FOR FUNCTION IMPORT LIST MODEL RETURN RUN SUBMODEL WHILE IF IN
 %token <string> TYPE
 %token PRINT
 %token ENDOFPROGRAM
@@ -15,7 +15,6 @@
 %token <string> STRINGLIT
 %token <string> ID
 %token <string> PRESET
-
 
 %right ASSIGN
 %left EQ NEQ
@@ -42,12 +41,12 @@ decl:
 	fdecl { $1 }
 
 fdecl:
-	FUNCTION ID LPAREN paras_opt RPAREN COLON TYPE stmt_list END 
+	FUNCTION ID LPAREN paras_opt RPAREN COLON TYPE COLON stmt_list END 
 	{{
 		fname = $2;
 		paras = $4;
-		body = List.rev $8
-		}}
+		body = List.rev $9
+	}}
 
 paras_opt:
       /* nothing */ { [] }
@@ -62,18 +61,29 @@ stmt_list:
   	| stmt_list stmt { $2 :: $1 }
 
 stmt:
-	PRINT LPAREN expr RPAREN SEMI { Print($3) }
+      expr SEMI { Expr($1) }
+    | RETURN expr SEMI { Return($2) }
+    | IF LPAREN expr RPAREN COLON stmt_list END
+      { If($3, $6, []) }
+    | IF LPAREN expr RPAREN COLON stmt_list ELSE COLON stmt_list END 
+      { If($3, $6, $9) }
+    | WHILE LPAREN expr RPAREN COLON stmt_list END { While($3, $6) }
+    | PRINT LPAREN expr RPAREN SEMI { Print($3) }
+    | FOR expr IN expr COLON stmt_list END { For($2, $4, $6) }
 
+expr_opt:
+    /* nothing */ { Noexpr }
+    | expr { $1 }
 
 expr:
-      INTEGERLIT      { Int($1) }
-	| FLOATLIT         { Float($1) }
-	| CHARLIT          { Char($1) }
-	| BOOLLIT          { Bool($1) }
-	| STRINGLIT        { String($1) }
+      INTEGERLIT       { Int($1) }
+  	| FLOATLIT         { Float($1) }
+  	| CHARLIT          { Char($1) }
+  	| BOOLLIT          { Bool($1) }
+  	| STRINGLIT        { String($1) }
   	| ID               { Id($1) }
   	| expr PLUS   expr { Binop($1, Add,   $3) }
-	| expr MINUS  expr { Binop($1, Sub,   $3) }
+	  | expr MINUS  expr { Binop($1, Sub,   $3) }
   	| expr TIMES  expr { Binop($1, Mult,  $3) }
   	| expr DIVIDE expr { Binop($1, Div,   $3) }
   	| expr EQ     expr { Binop($1, Equal, $3) }
