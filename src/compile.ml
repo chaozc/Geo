@@ -28,7 +28,7 @@ let translate (declarations, statements) =
 	      f ^ "(" ^ String.concat ", " (List.map string_of_expr el) ^ ")"
 	  | Noexpr -> ""
 	  
-	in let addTab s = " " ^ s 
+	in let addTab s = "\t" ^ s 
 	in let rec string_of_stmt = function
 		Expr(e) -> (string_of_expr e)  :: []
 	  | Print(expr) -> ("msg.insert(tk.END," ^ (string_of_expr expr) ^ ")") :: []
