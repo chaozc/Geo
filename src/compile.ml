@@ -47,10 +47,10 @@ let translate (declarations, statements) =
 	
 	in let rec translate_stmts = function
 		  [] -> []
-		| hd::tl -> (String.concat "\n " (string_of_stmt hd)) :: (translate_stmts tl)
+		| hd::tl -> (String.concat "\n\t" (string_of_stmt hd)) :: (translate_stmts tl)
 
 	in let string_of_func fdecl =  "def " ^ fdecl.fname ^ "(" ^ (String.concat ", " fdecl.paras) 
-			^ "):\n " ^ (String.concat "\n " (translate_stmts fdecl.body)) 
+			^ "):\n\t" ^ (String.concat "\n\t" (translate_stmts fdecl.body)) 
 
 	in let rec translate_funcs = function
 		  [] -> ""
