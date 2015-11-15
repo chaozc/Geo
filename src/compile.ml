@@ -28,7 +28,7 @@ let translate (declarations, statements) =
 	      f ^ "(" ^ String.concat ", " (List.map string_of_expr el) ^ ")"
 	  | Noexpr -> ""
 	  
-	in let addTab s = "\t" ^ s 
+	in let addTab s = "    " ^ s 
 	in let rec string_of_stmt = function
 		Expr(e) -> (string_of_expr e)  :: []
 	  | Print(expr) -> ("msg.insert(tk.END," ^ (string_of_expr expr) ^ ")") :: []
@@ -47,10 +47,10 @@ let translate (declarations, statements) =
 	
 	in let rec translate_stmts = function
 		  [] -> []
-		| hd::tl -> (String.concat "\n\t" (string_of_stmt hd)) :: (translate_stmts tl)
+		| hd::tl -> (String.concat "\n    " (string_of_stmt hd)) :: (translate_stmts tl)
 
 	in let string_of_func fdecl =  "def " ^ fdecl.fname ^ "(" ^ (String.concat ", " fdecl.paras) 
-			^ "):\n\t" ^ (String.concat "\n\t" (translate_stmts fdecl.body)) 
+			^ "):\n    " ^ (String.concat "\n    " (translate_stmts fdecl.body)) 
 
 	in let rec translate_funcs = function
 		  [] -> ""
