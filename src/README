@@ -1,4 +1,13 @@
 To run:
+
 sh install.sh
+********************
+12/06/2015 - Update
+********************
+./geo.sh test.g [optional test.py]
+
+********************
+11/16/2015 - Update
+********************
 ./geo < test.g > test.py
 python test.py
