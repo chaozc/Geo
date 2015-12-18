@@ -31,5 +31,6 @@ function printa(a:int, b:int):void:
 end
 
 printa(4,4);
+printT ("!23");
 
 @end

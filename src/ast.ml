@@ -22,6 +22,7 @@ type stmt =
 	| For of expr * expr * stmt list
 	| While of expr * stmt list
 	| Print of expr
+	| PrintT of expr
 
 type fdecl = {
     fname : string;

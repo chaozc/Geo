@@ -23,5 +23,4 @@ msg.insert(tk.END,"hello world")
 msg.insert(tk.END,'s')
 msg.insert(tk.END,1 + 1)
 printa(4, 4)
-print "!23"
 root.mainloop()

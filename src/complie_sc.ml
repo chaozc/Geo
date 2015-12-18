@@ -8,7 +8,9 @@ let prestring = ["import Tkinter as tk\n" ;
 
 let finalstring = ["root.mainloop()"]
 
-
+type env = {
+	vars : string StringMap.t;
+}
 let translate (declarations, statements) =
 	let rec string_of_expr = function
 	    Int(l) -> string_of_int l

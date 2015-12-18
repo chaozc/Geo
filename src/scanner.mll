@@ -56,6 +56,7 @@ rule token = parse
 | ("int"|"float"|"dot"|"void"|"bool"|"char"|"string") as tp {TYPE(tp)} (* Type *)
 
 | "print" {PRINT}
+| "printT" {PRINTT}
 | eof { EOF } (* End of file *)
 
 (* Integers *)

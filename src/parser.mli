@@ -43,6 +43,7 @@ type token =
   | IN
   | TYPE of (string)
   | PRINT
+  | PRINTT
   | ENDOFPROGRAM
   | EOF
   | INTEGERLIT of (int)

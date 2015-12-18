@@ -4,7 +4,7 @@
 %token EQ NEQ LT LEQ GT GEQ NOT	AND OR
 %token BREAK CONST ELSE END FOR FUNCTION IMPORT LIST MODEL RETURN RUN SUBMODEL WHILE IF IN
 %token <string> TYPE
-%token PRINT
+%token PRINT PRINTT
 %token ENDOFPROGRAM
 %token EOF
 
@@ -69,6 +69,7 @@ stmt:
       { If($3, $6, $9) }
     | WHILE LPAREN expr RPAREN COLON stmt_list END { While($3, $6) }
     | PRINT LPAREN expr RPAREN SEMI { Print($3) }
+    | PRINTT LPAREN expr RPAREN SEMI { PrintT($3) }
     | FOR expr IN expr COLON stmt_list END { For($2, $4, $6) }
 
 expr_opt:
