@@ -24,8 +24,9 @@ let translate (declarations, statements) =
 	      (match o with
 		Add -> "+" | Sub -> "-" | Mult -> "*" | Div -> "/"
 	      | Equal -> "==" | Neq -> "!="
-	      | Less -> "<" | Leq -> "<=" | Greater -> ">" | Geq -> ">=") ^ " " ^
+	      | Less -> "<" | Leq -> "<=" | Greater -> ">" | Geq -> ">=" | And -> "and" | Or -> "or") ^ " " ^
 	      string_of_expr e2
+	  | Not(e) -> "not(" ^ (string_of_expr e) ^ ")"
 	  | Assign(v, e) -> v ^ " = " ^ string_of_expr e
 	  | Call(f, el) ->
 	      f ^ "(" ^ String.concat ", " (List.map string_of_expr el) ^ ")"
