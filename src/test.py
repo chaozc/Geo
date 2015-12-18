@@ -32,4 +32,11 @@ pt = Point(3.3,2)
 msg.insert(tk.END,pt.x)
 l = Line(pt, Point(10,10))
 cc = Circle(pt, 10)
+a = [1, [3, 5]]
+i = 5
+j = 3
+while (not(i == 0 or j == 0)):
+		i = i - 1
+		j = j - 1
+		msg.insert(tk.END,i + j)
 root.mainloop()

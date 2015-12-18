@@ -18,6 +18,8 @@
 
 %right ASSIGN
 %left EQ NEQ
+%left AND OR
+%right NOT
 %left LT GT LEQ GEQ
 %left PLUS MINUS
 %left TIMES DIVIDE
@@ -98,6 +100,9 @@ expr:
   	| expr LEQ    expr { Binop($1, Leq,   $3) }
   	| expr GT     expr { Binop($1, Greater,  $3) }
   	| expr GEQ    expr { Binop($1, Geq,   $3) }
+    | expr AND    expr { Binop($1, And,   $3) }
+    | expr OR     expr { Binop($1, Or,   $3) }
+    | NOT expr         { Not($2) }
   	| ID ASSIGN expr   { Assign($1, $3) }
   	| ID LPAREN actuals_opt RPAREN { Call($1, $3) }
   	| LPAREN expr RPAREN { $2 }
@@ -105,6 +110,7 @@ expr:
     | expr GET expr { Get_Call($1, $3) }
     | LINE LPAREN actuals_opt RPAREN { Line($3) }
     | CIRCLE LPAREN actuals_opt RPAREN { Circle($3) }
+    | LBRACE actuals_opt RBRACE { List($2) }
 
 
 

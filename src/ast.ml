@@ -1,4 +1,4 @@
-type op = Add | Sub | Mult | Div | Equal | Neq | Less | Leq | Greater | Geq
+type op = Add | Sub | Mult | Div | Equal | Neq | Less | Leq | Greater | Geq | And | Or 
 
 type preset =
 	 Preset of string * string 
@@ -19,6 +19,8 @@ type expr =
   	| Get_Call of expr * expr
   	| Line of expr list
   	| Circle of expr list
+  	| List of expr list
+  	| Not of expr
 
 
 type stmt = 

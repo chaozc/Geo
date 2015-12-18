@@ -40,5 +40,10 @@ pt = [3.3, 2];
 print (pt.x);
 l = line(pt, [10,10]);
 cc = circle(pt, 10);
-
+a = {1, {3, 5}};
+i = 5; j = 3;
+while (!(i == 0 | j == 0)):
+i = i-1; j= j-1;
+print (i+j);
+end
 @end
