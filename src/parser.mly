@@ -2,7 +2,7 @@
 %token LPAREN RPAREN LBRACE RBRACE LSQUAR RSQUAR SEMI COLON GET COMMA ASSIGN AT
 %token PLUS MINUS TIMES DIVIDE PERCENT EXP
 %token EQ NEQ LT LEQ GT GEQ NOT	AND OR
-%token BREAK CONST ELSE END FOR FUNCTION IMPORT LIST MODEL RETURN RUN SUBMODEL WHILE IF IN
+%token BREAK CONST ELSE END FOR FUNCTION IMPORT LIST MODEL RETURN RUN SUBMODEL WHILE IF IN LINE CIRCLE
 %token <string> TYPE
 %token PRINT PRINTT
 %token ENDOFPROGRAM
@@ -21,6 +21,7 @@
 %left LT GT LEQ GEQ
 %left PLUS MINUS
 %left TIMES DIVIDE
+%left GET
 
 %start program
 %type <Ast.program> program
@@ -76,6 +77,10 @@ expr_opt:
     /* nothing */ { Noexpr }
     | expr { $1 }
 
+digit:
+      INTEGERLIT       { Int($1) }
+    | FLOATLIT         { Float($1) }
+
 expr:
       INTEGERLIT       { Int($1) }
   	| FLOATLIT         { Float($1) }
@@ -96,6 +101,12 @@ expr:
   	| ID ASSIGN expr   { Assign($1, $3) }
   	| ID LPAREN actuals_opt RPAREN { Call($1, $3) }
   	| LPAREN expr RPAREN { $2 }
+    | LSQUAR expr COMMA expr RSQUAR { Dot($2, $4) }
+    | expr GET expr { Get_Call($1, $3) }
+    | LINE LPAREN actuals_opt RPAREN { Line($3) }
+    | CIRCLE LPAREN actuals_opt RPAREN { Circle($3) }
+
+
 
 actuals_opt:
     /* nothing */ { [] }

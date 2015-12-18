@@ -50,8 +50,8 @@ rule token = parse
 | "list" { LIST }		| "break" { BREAK }
 | "model" {MODEL}		| "return" { RETURN }
 | "run" {RUN}			| "const" { CONST }
-| "submodel" {SUBMODEL}	
-| "while" { WHILE }
+| "submodel" {SUBMODEL}	| "line" {LINE}
+| "while" { WHILE }     | "circle" {CIRCLE}
 
 | ("int"|"float"|"dot"|"void"|"bool"|"char"|"string") as tp {TYPE(tp)} (* Type *)
 

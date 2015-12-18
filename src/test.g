@@ -33,4 +33,12 @@ end
 printa(4,4);
 printT ("!23");
 
+pt = [1.1, 2.1];
+pt = [2.4+1, 2];
+pt = [0, 2.3];
+pt = [3.3, 2];
+print (pt.x);
+l = line(pt, [10,10]);
+cc = circle(pt, 10);
+
 @end

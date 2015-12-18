@@ -41,6 +41,8 @@ type token =
   | WHILE
   | IF
   | IN
+  | LINE
+  | CIRCLE
   | TYPE of (string)
   | PRINT
   | PRINTT

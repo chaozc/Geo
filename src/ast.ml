@@ -3,6 +3,7 @@ type op = Add | Sub | Mult | Div | Equal | Neq | Less | Leq | Greater | Geq
 type preset =
 	 Preset of string * string 
 
+
 type expr =
 	  Noexpr
 	| Int of int
@@ -14,6 +15,11 @@ type expr =
 	| Binop of expr * op * expr
 	| Assign of string * expr
   	| Call of string * expr list
+  	| Dot of expr * expr
+  	| Get_Call of expr * expr
+  	| Line of expr list
+  	| Circle of expr list
+
 
 type stmt = 
 	| Expr of expr

@@ -1,4 +1,5 @@
 import Tkinter as tk
+from sympy.geometry import *
 root = tk.Tk()
 root.title("Geo")
 msg = tk.Listbox(root, width=50, height=10)
@@ -24,4 +25,11 @@ msg.insert(tk.END,'s')
 msg.insert(tk.END,1 + 1)
 printa(4, 4)
 print "!23"
+pt = Point(1.1,2.1)
+pt = Point(2.4 + 1,2)
+pt = Point(0,2.3)
+pt = Point(3.3,2)
+msg.insert(tk.END,pt.x)
+l = Line(pt, Point(10,10))
+cc = Circle(pt, 10)
 root.mainloop()

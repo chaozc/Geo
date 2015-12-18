@@ -1,12 +1,14 @@
 open Ast
 
-let prestring = ["import Tkinter as tk\n" ; 
+let prestring = ["import Tkinter as tk\n" ;
+				 "from sympy.geometry import *\n"; 
 				 "root = tk.Tk()\n";
 				 "root.title(\"Geo\")\n";
 				 "msg = tk.Listbox(root, width=50, height=10)\n";
 				 "msg.grid(row=0, column=0)\n"]
 
 let finalstring = ["root.mainloop()"]
+
 
 
 let translate (declarations, statements) =
@@ -28,6 +30,11 @@ let translate (declarations, statements) =
 	  | Call(f, el) ->
 	      f ^ "(" ^ String.concat ", " (List.map string_of_expr el) ^ ")"
 	  | Noexpr -> ""
+	  | Dot(x, y) -> "Point(" ^ (string_of_expr x) ^ "," ^ (string_of_expr y) ^ ")" 
+	  | Get_Call(x, y) -> (string_of_expr x) ^ "." ^ (string_of_expr y)
+	  | Line(x) -> "Line(" ^ String.concat ", " (List.map string_of_expr x) ^ ")"
+	  | Circle(x) ->  "Circle(" ^ String.concat ", " (List.map string_of_expr x) ^ ")"
+
 	  
 	in let addTab s = "\t" ^ s 
 	in let rec string_of_stmt = function
