@@ -70,7 +70,7 @@ let translate (declarations, statements) =
 	      let returnType =  try StringMap.find (gtc ^ ":" ^ f) env.contents.funcs with Not_found -> raise(Failure("Undeclared Fuction " ^ gtc ^ ":" ^ f))
 	  in  let func_opt_types = StringMap.find (gtc ^ ":" ^ f) env.contents.func_opt 
 	in    let opt_match a b = if (a=b) then true else false
-in        let opts_match a b = if (List.for_all2 opt_match a b) then true else raise(Failure("Undeclared Fuction " ^ gtc ^ ":" ^ f ^ "(" ^ (String.concat "," (List.map snd result_el))))
+in        let opts_match a b = if (List.for_all2 opt_match a b) then true else raise(Failure("Fuction Parameter Not Match\n" ^ "Required " ^ gtc ^ ":" ^ f ^ "(" ^ (String.concat "," func_opt_types) ^ ")\n" ^ "Get " ^gtc ^ ":" ^ f ^ "(" ^ (String.concat "," (List.map snd result_el)) ^ ")"))
 in
 	      (opts_match func_opt_types (List.map snd result_el);(f ^ "(" ^ String.concat ", " (List.map fst result_el) ^ ")",returnType) )
 
