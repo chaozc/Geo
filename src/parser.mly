@@ -46,9 +46,11 @@ decl:
 fdecl:
 	FUNCTION ID LPAREN paras_opt RPAREN COLON TYPE COLON stmt_list END 
 	{{
+    tp = $7;
 		fname = $2;
 		paras = $4;
 		body = List.rev $9
+    
 	}}
 
 paras_opt:
@@ -56,8 +58,8 @@ paras_opt:
   	| paras_list   { List.rev $1 }
 
 paras_list:
-   	  ID COLON TYPE              	 { [$1] }
-  	| paras_list COMMA ID COLON TYPE { $3 :: $1 }
+   	  ID COLON TYPE              	 { [($1, $3)] }
+  	| paras_list COMMA ID COLON TYPE { ($3, $5) :: $1 }
 
 stmt_list:
       /* nothing */  { [] }

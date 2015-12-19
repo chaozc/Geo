@@ -32,9 +32,11 @@ type stmt =
 	| Print of expr
 	| PrintT of expr
 
+
 type fdecl = {
+	tp : string;
     fname : string;
-    paras : string list;
+    paras : (string * string) list;
     body : stmt list;
 	}
 
