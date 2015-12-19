@@ -29,12 +29,12 @@ let env = ref {
 env := {vars = StringMap.empty; funcs = StringMap.add "dot:distance" "float" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:distance" ["dot"] env.contents.func_opt};;
 env := {vars = StringMap.empty; funcs = StringMap.add "dot:getX" "float" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:getX" [] env.contents.func_opt};;
 env := {vars = StringMap.empty; funcs = StringMap.add "dot:getY" "float" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:getY" [] env.contents.func_opt};;
-env := {vars = StringMap.empty; funcs = StringMap.add "dot:setRunstep" "void" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:setRunstep" [] env.contents.func_opt};;
-env := {vars = StringMap.empty; funcs = StringMap.add "dot:getRunstep" "float" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:getRunstep" [] env.contents.func_opt};;
+env := {vars = StringMap.empty; funcs = StringMap.add "dot:setRunstep" "void" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:setRunstep" ["float"; "char"] env.contents.func_opt};;
+env := {vars = StringMap.empty; funcs = StringMap.add "dot:getRunstep" "float" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:getRunstep" ["char"] env.contents.func_opt};;
 
 
 
-let translate (declarations, statements) =
+let translate (declarations, statements) = 
 	let rec string_of_expr = function
 	    Int(l) -> (string_of_int l, "int")
 	  | Float(l) -> (string_of_float l, "float")
@@ -46,9 +46,20 @@ let translate (declarations, statements) =
 	  	  let result1 = string_of_expr e1 and result2 = string_of_expr e2 in
 	      ((fst result1) ^ " " ^
 	      (match o with
-		Add -> "+" | Sub -> "-" | Mult -> "*" | Div -> "/"
-	      | Equal -> "==" | Neq -> "!="
-	      | Less -> "<" | Leq -> "<=" | Greater -> ">" | Geq -> ">=" | And -> "and" | Or -> "or") ^ " " ^
+		  Add -> "+" 
+		| Sub -> "-" 
+		| Mult -> "*" 
+		| Div -> "/"
+	    | Equal -> "==" 
+	    | Neq -> "!="
+	    | Less -> "<" 
+	    | Leq -> "<=" 
+	    | Greater -> ">" 
+	    | Geq -> ">=" 
+	    | And -> "and" 
+	    | Or -> "or"
+	    ) 
+	      ^ " " ^
 	      (fst result2), snd result1)
 
 	  | Not(e) -> let result = string_of_expr e in ("not(" ^ fst result ^ ")", snd result)
@@ -69,7 +80,7 @@ let translate (declarations, statements) =
 	      let result_el = List.map string_of_expr el in
 	      let returnType =  try StringMap.find (gtc ^ ":" ^ f) env.contents.funcs with Not_found -> raise(Failure("Undeclared Fuction " ^ gtc ^ ":" ^ f))
 	  in  let func_opt_types = StringMap.find (gtc ^ ":" ^ f) env.contents.func_opt 
-	in    let opt_match a b = if (a=b) then true else false
+	in    let opt_match a b = if (a=b) then true else if (a="int" && b="float") then true else false
 in        let opts_match a b = if (List.for_all2 opt_match a b) then true else raise(Failure("Fuction Parameter Not Match\n" ^ "Required " ^ gtc ^ ":" ^ f ^ "(" ^ (String.concat "," func_opt_types) ^ ")\n" ^ "Get " ^gtc ^ ":" ^ f ^ "(" ^ (String.concat "," (List.map snd result_el)) ^ ")"))
 in let mat = try opts_match func_opt_types (List.map snd result_el) with Invalid_argument "List.for_all2" -> raise(Failure("Fuction Parameter Not Match\n" ^ "Required " ^ gtc ^ ":" ^ f ^ "(" ^ (String.concat "," func_opt_types) ^ ")\n" ^ "Get " ^gtc ^ ":" ^ f ^ "(" ^ (String.concat "," (List.map snd result_el)) ^ ")")) in
 	      f ^ "(" ^ String.concat ", " (List.map fst result_el) ^ ")",returnType

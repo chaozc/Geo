@@ -26,5 +26,5 @@ end
 
 printa(1,2);
 printb(4,3);
-printa(1.2);
+printa(1.2, i);
 @end
