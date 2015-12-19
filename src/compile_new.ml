@@ -44,23 +44,29 @@ let translate (declarations, statements) =
 	  | Id(s) ->  (s, try StringMap.find s env.contents.vars with Not_found -> raise(Failure("Undeclared Variable " ^ s))) 
 	  | Binop(e1, o, e2) ->
 	  	  let result1 = string_of_expr e1 and result2 = string_of_expr e2 in
-	      ((fst result1) ^ " " ^
+	  	  let digit_op_match op a b = if ((a="string"||a="int"||a="float")&&a=b) then (true, a) else if ((a="float" && b="int")||(a="int" && b="float")) then (true, "float") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in
+	  	  let eq_op_match op a b = if (a=b&&(a="string"||a="int"||a="float"||a="bool")) then (true, "bool") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in 
+	  	  let bool_op_match op a b = if (a=b && a="bool") then (true, "bool") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in 
+	      let get_type_bi o = 
 	      (match o with
-		  Add -> "+" 
-		| Sub -> "-" 
-		| Mult -> "*" 
-		| Div -> "/"
-	    | Equal -> "==" 
-	    | Neq -> "!="
-	    | Less -> "<" 
-	    | Leq -> "<=" 
-	    | Greater -> ">" 
-	    | Geq -> ">=" 
-	    | And -> "and" 
-	    | Or -> "or"
-	    ) 
+		  Add -> let ck = digit_op_match "+" (snd result1) (snd result2) in (snd ck, "+") 
+		| Sub -> let ck = digit_op_match "+" (snd result1) (snd result2) in (snd ck, "-") 
+		| Mult -> let ck = digit_op_match "+" (snd result1) (snd result2) in (snd ck, "*") 
+		| Div -> let ck = digit_op_match "+" (snd result1) (snd result2) in (snd ck, "/")
+	    | Equal -> let ck = eq_op_match "==" (snd result1) (snd result2) in (snd ck, "==") 
+	    | Neq -> let ck = eq_op_match "!=" (snd result1) (snd result2) in (snd ck, "!=")
+	    | Less -> let ck = eq_op_match "<" (snd result1) (snd result2) in (snd ck, "<") 
+	    | Leq -> let ck = eq_op_match "<=" (snd result1) (snd result2) in (snd ck, "<=") 
+	    | Greater -> let ck = eq_op_match ">" (snd result1) (snd result2) in (snd ck, ">") 
+	    | Geq -> let ck = eq_op_match ">=" (snd result1) (snd result2) in (snd ck, ">=") 
+	    | And -> let ck = bool_op_match "&" (snd result1) (snd result2) in (snd ck, "and") 
+	    | Or -> let ck = bool_op_match "|" (snd result1) (snd result2) in (snd ck, "or")
+	    ) in
+	      let result_op = get_type_bi o in 
+	      ((fst result1) ^ " " ^
+	      (snd result_op)
 	      ^ " " ^
-	      (fst result2), snd result1)
+	      (fst result2), fst result_op)
 
 	  | Not(e) -> let result = string_of_expr e in ("not(" ^ fst result ^ ")", snd result)
 	  | Assign(v, e) -> let result = string_of_expr e in (env := {vars = StringMap.add v (snd result) env.contents.vars; funcs = env.contents.funcs; get_call = env.contents.get_call; func_opt = env.contents.func_opt}; (v ^ " = " ^ fst result, snd result))
@@ -108,10 +114,10 @@ in let mat = try opts_match func_opt_types (List.map snd result_el) with Invalid
 	
 	in let rec translate_stmts = function
 		  [] -> []
-		| hd::tl -> (String.concat "\n\t" (string_of_stmt hd)) :: (translate_stmts tl)
+		| hd::tl -> let result1 = (String.concat "\n\t" (string_of_stmt hd)) and result2 = (translate_stmts tl) in (result1::result2)
 	in let para_var paras_tp = env := {vars = StringMap.add  (fst paras_tp) (snd paras_tp) env.contents.vars; funcs = env.contents.funcs; get_call = env.contents.get_call; func_opt = env.contents.func_opt}
 in let para_type fn paras_types = env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = env.contents.get_call; func_opt = StringMap.add fn paras_types env.contents.func_opt}
-	in let string_of_func fdecl =  (env := {vars = StringMap.empty; funcs = StringMap.add (":" ^ fdecl.fname) fdecl.tp env.contents.funcs; get_call = env.contents.get_call; func_opt = env.contents.func_opt};
+	in let string_of_func fdecl =  (env := {vars = env.contents.vars; funcs = StringMap.add (":" ^ fdecl.fname) fdecl.tp env.contents.funcs; get_call = env.contents.get_call; func_opt = env.contents.func_opt};
 	                                 List.map para_var fdecl.paras;
 	                                  para_type (":" ^ fdecl.fname) (List.map snd fdecl.paras);
 	                                  "def " ^ fdecl.fname ^ "(" ^ (String.concat ", " (List.map fst fdecl.paras)) ^ "):\n\t" ^ (String.concat "\n\t" (translate_stmts fdecl.body)))
@@ -119,7 +125,7 @@ in let para_type fn paras_types = env := {vars = env.contents.vars; funcs = env.
 	in let rec translate_funcs = function
 		  [] -> []
 		| hd::tl -> (string_of_func hd)::(translate_funcs tl)
-	in let dofunc = (String.concat "\n" (List.rev (translate_funcs (declarations)))) and dostms = (String.concat "\n" (List.rev (translate_stmts (statements))))
+	in let dofunc = (String.concat "\n" (List.rev (translate_funcs (declarations)))) and dostms = (String.concat "\n" ((translate_stmts (List.rev statements))))
 	in let tra = dofunc ^ "\n" ^ dostms ^ "\n"
 	in (String.concat "" prestring) ^ tra ^ (String.concat "" finalstring)
 

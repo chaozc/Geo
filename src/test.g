@@ -1,10 +1,11 @@
 @panel panel1
 print("hello world");
 print('s');
+i = 0;
+m = 1.1+'1';
+p = 1.2+0.3+0;
 print(1+1);
-print(d);
 function printa(a:int, b:int):void:
- print (da);
  print("startwhile");
  while (a>0):
   while (b>0):
@@ -28,7 +29,6 @@ i = 1;
  for i in "hello":
 
   print(i);
-  print(ddd);
  end
  m = 1;
  
