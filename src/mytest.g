@@ -15,5 +15,16 @@ print(i);
 end
 if (i > 1):
 print(i+1);
+else:
+print("aaaaa");
+a = [1,3];
+b = line(1,3);
+c = circle(1,4);
+d = runset(1,3);
+
+run d:
+print("hahah");
+print("ddd");
+end
 end
 @end

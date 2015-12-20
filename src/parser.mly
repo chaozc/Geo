@@ -2,7 +2,7 @@
 %token LPAREN RPAREN LBRACE RBRACE LSQUAR RSQUAR SEMI COLON GET COMMA ASSIGN DOLL
 %token PLUS MINUS TIMES DIVIDE PERCENT EXP
 %token EQ NEQ LT LEQ GT GEQ NOT	AND OR
-%token BREAK CONST ELSE END FOR FUNCTION IMPORT LIST MODEL RETURN RUN SUBMODEL WHILE IF IN LINE CIRCLE
+%token BREAK CONST ELSE END FOR FUNCTION IMPORT LIST MODEL RETURN RUN SUBMODEL WHILE IF IN LINE CIRCLE RUNSET
 %token <string> TYPE
 %token PRINT PRINTT
 %token ENDOFPROGRAM
@@ -78,6 +78,7 @@ stmt:
     | PRINT LPAREN expr RPAREN SEMI { Print($3) }
     | PRINTT LPAREN expr RPAREN SEMI { PrintT($3) }
     | FOR expr IN expr COLON stmt_list END { For($2, $4, $6) }
+    | RUN expr COLON stmt_list END { Run($2, $4) }
 
 expr_opt:
     /* nothing */ { Noexpr }
@@ -117,6 +118,7 @@ expr:
     | expr GET expr { Get_Call($1, $3) }
     | LINE LPAREN actuals_opt RPAREN { Line($3) }
     | CIRCLE LPAREN actuals_opt RPAREN { Circle($3) }
+    | RUNSET LPAREN actuals_opt RPAREN { Runset($3) }
     | LBRACE actuals_opt RBRACE { List($2) }
     | expr DOLL expr { ListEle($1, $3) }
 

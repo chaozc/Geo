@@ -53,6 +53,7 @@ rule token = parse
 | "run" {RUN}			| "const" { CONST }
 | "submodel" {SUBMODEL}	| "line" {LINE}
 | "while" { WHILE }     | "circle" {CIRCLE}
+| "runset" { RUNSET }
 
 | ("int"|"float"|"dot"|"void"|"bool"|"char"|"string") as tp {TYPE(tp)} (* Type *)
 

@@ -2,7 +2,6 @@ open Ast
 open Pyast
 let prestring = ["from sysgeo import *\n";
 				"import Tkinter as tk\n" ;
-				 "from sympy.geometry import *\n"; 
 				 "root = tk.Tk()\n";
 				 "root.title(\"Geo\")\n";
 				 "msg = tk.Listbox(root, width=50, height=10)\n";
@@ -124,8 +123,9 @@ let translate (declarations, statements) =
 							in (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = snd result1; func_opt = env.contents.func_opt};
 								let result2 =  py_of_expr y in
 	  							(PyGet_Call(fst result1,fst result2), snd result2))
-	  | Line(x) -> (PyCall("line", (List.map fst (List.map py_of_expr x))), "circle")
+	  | Line(x) -> (PyCall("line", (List.map fst (List.map py_of_expr x))), "line")
 	  | Circle(x) ->  (PyCall("circle", (List.map fst (List.map py_of_expr x))), "circle")
+	  | Runset(x) ->  (PyCall("runset", (List.map fst (List.map py_of_expr x))), "runset")
 	  | List(x) -> (PyList(List.map fst (List.map py_of_expr x)), "list")
 	  | ListEle(x1, x2) -> 
 	  		let ln_ = py_of_expr x1 and id_ = py_of_expr x2 in
@@ -163,6 +163,12 @@ in let ck_bool tp rb = if ((snd rb)="bool") then true else raise(Failure(tp ^ " 
 	  let rb = py_of_expr e1 in 
 	  (ck_bool "If" rb; env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};
 	  		PyIf(fst rb, (List.map py_of_stmt (List.rev s1)), (List.map py_of_stmt (List.rev s2))))
+	  | Run(e, s) ->
+	  let re = py_of_expr e in
+	  let ck_id = function
+	  	Id(i) -> if ((snd re)="runset") then i else raise(Failure("Run must be followed by a variable Id with type 'runset' , not "^ (snd re)))
+	  	| _ -> raise(Failure("Run must be followed by a variable with type 'runset' "))
+	  in PyWhile(PyId((ck_id e)^".run()"), List.map py_of_stmt (List.rev s))
 	
 	in let rec translate_stmts = function
 		  [] -> []

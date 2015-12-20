@@ -20,23 +20,6 @@ let translate (declarations, statements) =
 	  | PyId(s) ->  s
 	  | PyBinop(e1, o, e2) ->
 	  	  let result1 = string_of_expr e1 and result2 = string_of_expr e2 in
-	  	  (*let string_of_op o = 
-	      (match o with
-		  Add -> "+"
-		| Sub -> "-" 
-		| Mult -> "*"
-		| Div -> "/"
-		| Mod -> "%"
-		| Exp -> "**"
-	    | Equal -> "=="
-	    | Neq -> "!="
-	    | Less -> "<"
-	    | Leq -> "<="
-	    | Greater -> ">" 
-	    | Geq -> ">=" 
-	    | And -> "and" 
-	    | Or -> "or"
-	    ) in *)
 	      "(" ^ result1 ^ " "^ o ^ " "^result2 ^ ")" 
 	  | PyMinus(e) ->
 	  	let result = string_of_expr e in "-" ^ result
@@ -44,13 +27,9 @@ let translate (declarations, statements) =
 	  | PyAssign(v, e) -> let result = string_of_expr e in v ^ " = " ^ result
 	  
 	  | PyNoexpr -> ""
-	  (*
-	  | Dot(x, y) -> let result1 = string_of_expr x and result2 = string_of_expr y in 
-	                 ("dot(" ^ fst result1 ^ "," ^ fst result2 ^ ")", "dot") *)
+
 	  | PyGet_Call(x, y) -> let result1 = string_of_expr x and result2 =  string_of_expr y
 							in result1 ^ "." ^ result2
-	  (*| Line(x) -> ("line(" ^ String.concat ", " (List.map fst (List.map string_of_expr x)) ^ ")", "line")
-	  | Circle(x) ->  ("circle(" ^ String.concat ", " (List.map fst (List.map string_of_expr x)) ^ ")", "circle")*)
 	  | PyList(x) -> "[" ^  String.concat ", " (List.map string_of_expr x) ^ "]"
 	  | PyListEle(x1, x2) -> 
 	  		let ln = string_of_expr x1 and id = string_of_expr x2 in ln ^ "[" ^ id ^ "]"
@@ -81,7 +60,7 @@ let translate (declarations, statements) =
 	
 	in let rec translate_stmts = function
 		  [] -> []
-		| hd::tl -> let result1 = (String.concat "\n\t" (string_of_stmt hd)) and result2 = (translate_stmts tl) in (result1::result2)
+		| hd::tl -> let result1 = (String.concat "\n" (string_of_stmt hd)) and result2 = (translate_stmts tl) in (result1::result2)
 	in let string_of_func fdecl =  "def " ^ fdecl.pyfname ^ "(" ^ (String.concat ", " fdecl.pyparas) ^ "):\n\t" ^ (String.concat "\n\t" (translate_stmts fdecl.pybody))
 
 	in let rec translate_funcs = function
