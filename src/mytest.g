@@ -1,5 +1,9 @@
 @panel HAHA
-
+if (1 == 3):
+print(2);
+else:
+print(1);
+end
 print(1);
 print(2);
 print(3);
@@ -13,7 +17,7 @@ while (i < 10):
 i = i+1;
 print(i);
 end
-if (i > 1):
+if (i < 1):
 print(i+1);
 else:
 print("aaaaa");
@@ -25,6 +29,7 @@ d = runset(1,3);
 run d:
 print("hahah");
 print("ddd");
+d.addPara();
 end
 end
 @end

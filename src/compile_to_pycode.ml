@@ -1,12 +1,12 @@
 open Pyast
 let prestring = ["from sysgeo import *\n";
-				 "import Tkinter as tk\n" ;
-				 "root = tk.Tk()\n";
+				 "import Tkinter as tk\n" ;]
+				(*) "root = tk.Tk()\n";
 				 "root.title(\"Geo\")\n";
 				 "msg = tk.Listbox(root, width=50, height=10)\n";
-				 "msg.grid(row=0, column=0)\n"]
+				 "msg.grid(row=0, column=0)\n"]*)
 
-let finalstring = ["root.mainloop()"]
+let finalstring = [""](*["root.mainloop()"]*)
 
 
 let translate (declarations, statements) = 
