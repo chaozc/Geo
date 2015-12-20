@@ -1,5 +1,5 @@
 open Ast
-
+open Sys
 let prestring = ["import Tkinter as tk\n" ;
 				 "from sympy.geometry import *\n"; 
 				 "root = tk.Tk()\n";
@@ -72,8 +72,6 @@ env := {vars = StringMap.empty; funcs = StringMap.add "runset:renew" "void" env.
 env := {vars = StringMap.empty; funcs = StringMap.add "runset:enableRun" "void" env.contents.funcs; get_call = ""; func_opt = StringMap.add "runset:enableRun" [""] env.contents.func_opt};;
 env := {vars = StringMap.empty; funcs = StringMap.add "runset:disableRun" "Void" env.contents.funcs; get_call = ""; func_opt = StringMap.add "runset:disableRun" [""] env.contents.func_opt};;
 env := {vars = StringMap.empty; funcs = StringMap.add "runset:removePara" "bool" env.contents.funcs; get_call = ""; func_opt = StringMap.add "runset:removePara" ["shape";"char"] env.contents.func_opt};;
-
-
 
 
 let translate (declarations, statements) = 
@@ -153,8 +151,14 @@ in let mat = try opts_match func_opt_types (List.map snd result_el) with Invalid
 	  | Print(expr) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};("msg.insert(tk.END," ^ fst (string_of_expr expr) ^ ")") :: [])
 	  | While(e, s) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};("while (" ^ fst (string_of_expr e) ^ "):") ::
 	  	(List.map addTab (List.concat (List.rev (List.map string_of_stmt s)))))
-	  | For(e1, e2, s) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};
-	  	("for " ^ fst (string_of_expr e1) ^ " in " ^ fst (string_of_expr e2) ^ ":")
+	  | For(e1, e2, s) -> 
+	  let r1_ck_fori = function 
+	  	Id(s) -> (env := {vars = StringMap.add s "list_ele" env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt}; string_of_expr e1)
+	  | _ -> raise(Failure("Geo Syntax Error Forloop"))
+	in 
+	  let r1 = r1_ck_fori e1 and r2 = string_of_expr e2 in 
+	  (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};
+	  	("for " ^ fst r1 ^ " in " ^ fst r2 ^ ":")
 	  		:: (List.map addTab (List.concat (List.rev (List.map string_of_stmt s)))))
 	  | Return(e) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};("return " ^ fst (string_of_expr e)) :: [])
 	  | If(e1, s1, s2) ->  

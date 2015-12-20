@@ -1,6 +1,5 @@
 from sympy.geometry import *
-class ClassName:
-	x = 1;
-	y = 2;
-print ClassName.x, ClassName.y
+i = 0
+for i in [i, i+1]:
+	print i;
 

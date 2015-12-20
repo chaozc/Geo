@@ -26,7 +26,10 @@ print (aaa(1));
 z = {1,1012,47, {999}};
 //z.append(3244);
 //z.pop(2);
-print (z#3#0);
+print (z#3);
 a =(1+2)*3^5;
 print (a);
+for i in {1,2,3}:
+print(101);
+end
 @end
