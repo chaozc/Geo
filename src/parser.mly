@@ -17,8 +17,8 @@
 %token <string> PRESET
 
 %right ASSIGN
-%left EQ NEQ
 %left AND OR
+%left EQ NEQ
 %right NOT
 %left LT GT LEQ GEQ
 %left PLUS MINUS
