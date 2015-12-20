@@ -1,5 +1,5 @@
 @panel panel1
-if('c'=='d'):
+if(5==3):
 printT("5==3");
 else:
 printT("5>3");

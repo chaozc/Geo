@@ -1,7 +1,6 @@
 open Pyast
 let prestring = ["from sysgeo import *\n";
 				 "import Tkinter as tk\n" ;
-				 "from sympy.geometry import *\n"; 
 				 "root = tk.Tk()\n";
 				 "root.title(\"Geo\")\n";
 				 "msg = tk.Listbox(root, width=50, height=10)\n";
