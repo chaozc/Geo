@@ -28,7 +28,8 @@ rule token = parse
 | '[' { LSQUAR } | ']' { RSQUAR } (* Square brackets *)
 | ';' { SEMI }   | ':' { COLON } 
 | '.' {GET}		 | ',' { COMMA }
-| '=' { ASSIGN } (* | '@' { AT } *)
+| '=' { ASSIGN } (*'@' { AT }*) 
+| '#' { DOLL}
 
 (* Arithmetic operators *)
 | '+' { PLUS }   | '-' { MINUS }

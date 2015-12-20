@@ -10,7 +10,7 @@ type token =
   | GET
   | COMMA
   | ASSIGN
-  | AT
+  | DOLL
   | PLUS
   | MINUS
   | TIMES

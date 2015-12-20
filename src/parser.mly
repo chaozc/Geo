@@ -1,5 +1,5 @@
 %{ open Ast %}
-%token LPAREN RPAREN LBRACE RBRACE LSQUAR RSQUAR SEMI COLON GET COMMA ASSIGN AT
+%token LPAREN RPAREN LBRACE RBRACE LSQUAR RSQUAR SEMI COLON GET COMMA ASSIGN DOLL
 %token PLUS MINUS TIMES DIVIDE PERCENT EXP
 %token EQ NEQ LT LEQ GT GEQ NOT	AND OR
 %token BREAK CONST ELSE END FOR FUNCTION IMPORT LIST MODEL RETURN RUN SUBMODEL WHILE IF IN LINE CIRCLE
@@ -25,6 +25,7 @@
 %left TIMES DIVIDE PERCENT
 %left EXP
 %left GET
+%left DOLL
 
 %start program
 %type <Ast.program> program
@@ -117,7 +118,7 @@ expr:
     | LINE LPAREN actuals_opt RPAREN { Line($3) }
     | CIRCLE LPAREN actuals_opt RPAREN { Circle($3) }
     | LBRACE actuals_opt RBRACE { List($2) }
-    | expr LBRACE expr RBRACE { ListEle($1, $3) }
+    | expr DOLL expr { ListEle($1, $3) }
 
 
 
