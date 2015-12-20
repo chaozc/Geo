@@ -1,7 +1,7 @@
 from sympy.geometry import *
 from sympy.geometry.line import LinearEntity
-from sympy.geometry.entity import GeometryEntity
-from math import sqrt,pi,cos,sin
+from time import sleep
+from math import sqrt,pi,cos,sin,tan
 
 PI = pi
 
@@ -41,6 +41,7 @@ class dot(Point):
 class line(object):
 	def __init__(self,a,b,end_point_1=None,end_point_2=None):
 		if(end_point_1 is None):
+			self.isLine = True
 			if(isinstance(a,Point)):
 				if(b.x!=a.x):
 					self.a = float(b.y - a.y)/(b.x-a.x)
@@ -57,8 +58,8 @@ class line(object):
 					self.line_=Line(Point(0,self.b), Point(1, self.a+self.b))
 				else:
 					self.line_=Line(Point(0,0), Point(0,1))
-			self.isLine = True
 		else:
+			self.isLine = False
 			if(isinstance(a,Point)):
 				if(b.x!=a.x):
 					self.a = float(b.y - a.y) / (b.x - a.x)
@@ -72,13 +73,11 @@ class line(object):
 				self.a = float(a)
 				self.b = float(b)
 				self.line_=Segment(Point(end_point_1, self.a * end_point_1 + self.b), Point(end_point_2, self.a * end_point_2 + self.b)) 
-			self.isLine = False
 			if(b.x!=a.x):
 				self.end_point_1=min(end_point_1,end_point_2)
 				self.end_point_2=max(end_point_1,end_point_2)
 			else:
-				self.end_point_1=a.x
-				self.end_point_2=a.x
+				self.end_point_1=self.end_point_2=a.x
 		self.runStep = [0,0,0]
 	def __str__(self):
 		if(self.isLine):
@@ -101,22 +100,74 @@ class line(object):
 			self.end_point_1 = val
 		elif (pos == 'right_end'):
 			self.end_point_2 = val
-		if (isLine):
+		if (self.isLine):
 			self.line_=Line(Point(0,self.b), Point(1, self.a+self.b))
 		else:
 			self.line_=Segment(Point(self.end_point_1, self.a * self.end_point_1 + self.b), Point(self.end_point_2, self.a * self.end_point_2 + self.b))
-	def setparaYline(self,p1):
-		if(isinstance(p1,Point)):
-			self.line_=Line(Point(p1.x,0),Point(p1.x,1))
-			self.a=float('inf')
-			self.a=float('inf')
-	def setparaYsegm(self,p1,p2):
-		if(isinstance(p1,Point) and isinstance(p2,Point)):
-			self.line_=Segment(p1,p2)
-			self.a=float('inf')
-			self.a=float('inf')
-			self.end_point_1=min(p1.x,p2.x)
-			self.end_point_2=max(p1.x,p2.x)
+	# def setparaYline(self,p1):
+	# 	if(isinstance(p1,Point)):
+	# 		self.line_=Line(Point(p1.x,0),Point(p1.x,1))
+	# 		self.a=float('inf')
+	# 		self.a=float('inf')
+	# def setparaYsegm(self,p1,p2):
+	# 	if(isinstance(p1,Point) and isinstance(p2,Point)):
+	# 		self.line_=Segment(p1,p2)
+	# 		self.a=float('inf')
+	# 		self.a=float('inf')
+	# 		self.end_point_1=min(p1.x,p2.x)
+	# 		self.end_point_2=max(p1.x,p2.x)
+	def rotateonPoint(self,p,arc):
+		#print arc
+		if(arc<0):
+			arc = arc % pi - pi
+		else:
+			arc = arc % pi
+		#arc = arc % pi
+		if(abs(abs(arc)-(pi/2))<0.00001):
+			if(self.a==float('inf')):
+				self.a=0
+			elif(self.a==0):
+				self.a=float('inf')
+			else:
+				self.a=-1/self.a
+		elif(self.a==float('inf')):
+			if(arc != 0):
+				#print 'mark 1'
+				self.a = tan(pi/2 + arc)
+		else:
+			if(abs(1-self.a*tan(arc))<0.00001):
+				#print 'mark 4'
+				self.a = float('inf')
+			else:
+				#print 'mark 2'
+				self.a = (self.a+tan(arc))/(1-self.a*tan(arc))
+		if(abs(self.a)<0.00001):
+			self.a=0
+		if(self.a == float('inf')):
+			self.b=float('inf')
+			if(self.isLine):
+				self.line_ = Line(Point(p.x,0),Point(p.x,1))
+			else:
+				half = float(self.line_.length/2)
+				self.end_point_1=self.end_point_2=float(p.x)
+				self.line_=Segment(Point(p.x,p.y+half),Point(p.x,p.y-half))
+		else:
+			#print 'mark 3'
+			#print self.a
+			self.b = p.y-float(self.a)*p.x
+			#print self.b
+			if(abs(self.b)<0.00001):
+				self.b=0
+			if(self.isLine):
+				self.line_= Line(p,slope=self.a)
+			else:
+				templine = line(self.a,self.b)
+				half = float(self.line_.length/2)
+				p1=templine.pointAway(p,-half)
+				p2=templine.pointAway(p,half)
+				self.end_point_1=float(min(p1.x,p2.x))
+				self.end_point_2=float(max(p1.x,p2.x))
+				self.line_=Segment(p1,p2)
 	def setRunstep(self,pos,val):
 		if(pos == 'a'):
 			self.runStep[0]=val
@@ -153,13 +204,13 @@ class line(object):
 	def getY(self,x):
 		if(self.a == float('inf')):
 			return None
-		if(self.isLine or self.line_.contains(Point(x,x*self.x+self.y))):
+		if(self.isLine or self.line_.contains(Point(x,float(self.a*x)+self.b))):
 			return self.a*x+self.b
 		else:
 			return None
 	def getX(self,y):
 		if(self.a == float('inf')):
-			return line_.points()[0].x
+			return line_.points[0].x
 		if(self.isLine or self.line_.contains(Point((y-self.b)/self.a,y))):
 			return (y-self.b)/self.a
 		else:
@@ -178,7 +229,7 @@ class line(object):
 		if(isLine):
 			return None
 		else:
-			return list(self.line_.points())
+			return list(self.line_.points)
 	def length(self):	# Segment ONLY
 		if(self.isLine):
 			return 0
@@ -193,7 +244,7 @@ class line(object):
 		deltax = sqrt((dis**2)/(self.a**2+1))
 		if(dis < 0):
 			deltax=-deltax
-		finalx=p.x+deltax
+		finalx=p.x+float(deltax)
 		finaly=self.getY(finalx)
 		if(self.isLine or self.line_.contains(Point(finalx,finaly))):
 			return dot(finalx,finaly)
@@ -348,7 +399,7 @@ class polygon(object):
 		temp = []
 		for o in olist:
 			if(isinstance(o,Segment)):
-				endpoints = o.points()
+				endpoints = o.points
 				temp.append(line(endpoints[0],endpoints[1],endpoints[0].x,endpoints[1].x))
 			elif(isinstance(o,Point)):
 				temp.append(dot(o.x,o.y))
@@ -364,11 +415,15 @@ class polygon(object):
 
 
 class runset:
-	def __init__(self,runtime):
+	def __init__(self,runtime,sleeptime=None):
 		self.objlist = []
 		self.paralist = []
 		self.runtime = runtime
 		self.runenable = False
+		if(sleeptime is None):
+			self.sleeptime=0.5
+		else:
+			self.sleeptime = sleeptime
 	def addPara(self,obj,para):
 		self.objlist.append(obj)
 		self.paralist.append(para)
@@ -391,6 +446,7 @@ class runset:
 	def disableRun(self):
 		runenable=False
 	def run(self):
+		sleep(self.sleeptime)
 		if(self.runenable and (self.runtime != 0)):
 			self.renew()
 			self.runtime=self.runtime-1
