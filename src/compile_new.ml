@@ -1,6 +1,7 @@
 open Ast
 open Sys
-let prestring = ["import Tkinter as tk\n" ;
+let prestring = ["from sysgeo import *\n";
+				 "import Tkinter as tk\n" ;
 				 "from sympy.geometry import *\n"; 
 				 "root = tk.Tk()\n";
 				 "root.title(\"Geo\")\n";
@@ -115,8 +116,8 @@ let translate (declarations, statements) =
 	  	let tp = ck_minus (snd result) in
 	  	("-" ^ (fst result), tp)
 	  | Not(e) -> let result = string_of_expr e in 
-	  let ck_not x = if x == "bool" then x else raise(Failure("Undefined Operation: not(" ^ x^")")) in
-	  ("not(" ^ fst result ^ ")", snd result)
+	  let ck_not x = if x == "bool" then x else raise(Failure("Undefined Operation: !(" ^ x^")")) in 
+	  (ck_not (snd result); ("not(" ^ fst result ^ ")", snd result))
 	  | Assign(v, e) -> let result = string_of_expr e in (env := {vars = StringMap.add v (snd result) env.contents.vars; funcs = env.contents.funcs; get_call = env.contents.get_call; func_opt = env.contents.func_opt}; (v ^ " = " ^ fst result, snd result))
 	  
 	  | Noexpr -> ("", "none")
@@ -138,18 +139,19 @@ let translate (declarations, statements) =
 	      let result_el = List.map string_of_expr el in
 	      let returnType =  try StringMap.find (gtc ^ ":" ^ f) env.contents.funcs with Not_found -> raise(Failure("Undeclared Fuction " ^ gtc ^ ":" ^ f))
 	  in  let func_opt_types = StringMap.find (gtc ^ ":" ^ f) env.contents.func_opt 
-	in    let opt_match a b = if (a=b) then true else if (b="int" && a="float") then true else if (a="any"||b="list_ele") then true else false
+	in    let opt_match a b = if (a=b) then true else if (b="int" && a="float") then true else if (a="any"||b="list_ele") then true else if (a="shape"&&(b="dot"||b="line"||b="circle")) then true else false
 in        let opts_match a b = if (List.for_all2 opt_match a b) then true else raise(Failure("Fuction Parameter Not Match\n" ^ "Required " ^ gtc ^ ":" ^ f ^ "(" ^ (String.concat "," func_opt_types) ^ ")\n" ^ "Get " ^gtc ^ ":" ^ f ^ "(" ^ (String.concat "," (List.map snd result_el)) ^ ")"))
 in let mat = try opts_match func_opt_types (List.map snd result_el) with Invalid_argument "List.for_all2" -> raise(Failure("Fuction Parameter Not Match\n" ^ "Required " ^ gtc ^ ":" ^ f ^ "(" ^ (String.concat "," func_opt_types) ^ ")\n" ^ "Get " ^gtc ^ ":" ^ f ^ "(" ^ (String.concat "," (List.map snd result_el)) ^ ")")) in
 	      f ^ "(" ^ String.concat ", " (List.map fst result_el) ^ ")",returnType
 
 	  
 	in let addTab s = "\t" ^ s 
+in let ck_bool tp rb = if ((snd rb)="bool") then true else raise(Failure(tp ^ " Statement Need Bool Expression")) 
 	in let rec string_of_stmt = function
 		Expr(e) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt}; fst (string_of_expr e)  :: [])
 	  | PrintT(expr) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};("print " ^ fst (string_of_expr expr)) :: [])
 	  | Print(expr) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};("msg.insert(tk.END," ^ fst (string_of_expr expr) ^ ")") :: [])
-	  | While(e, s) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};("while (" ^ fst (string_of_expr e) ^ "):") ::
+	  | While(e, s) -> let rb = string_of_expr e in (ck_bool "While" rb;env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};("while (" ^ fst rb ^ "):") ::
 	  	(List.map addTab (List.concat (List.rev (List.map string_of_stmt s)))))
 	  | For(e1, e2, s) -> 
 	  let r1_ck_fori = function 
@@ -157,16 +159,18 @@ in let mat = try opts_match func_opt_types (List.map snd result_el) with Invalid
 	  | _ -> raise(Failure("Geo Syntax Error Forloop"))
 	in 
 	  let r1 = r1_ck_fori e1 and r2 = string_of_expr e2 in 
-	  (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};
+	  let r2_ck_fori r2 = if ((snd r2)="list") then true else raise(Failure("Geo Syntax Error Forloop")) in
+	  (r2_ck_fori r2;env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};
 	  	("for " ^ fst r1 ^ " in " ^ fst r2 ^ ":")
 	  		:: (List.map addTab (List.concat (List.rev (List.map string_of_stmt s)))))
 	  | Return(e) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};("return " ^ fst (string_of_expr e)) :: [])
 	  | If(e1, s1, s2) ->  
-	  (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};
+	  let rb = string_of_expr e1 in 
+	  (ck_bool "If" rb; env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};
 	  		match s2 with
-	  		[] -> ("if " ^ fst (string_of_expr e1) ^ ":") :: 
+	  		[] -> ("if " ^ fst rb ^ ":") :: 
 	  			(List.map addTab (List.concat (List.rev (List.map string_of_stmt s1))))
-	  		|_ -> (("if " ^ fst (string_of_expr e1) ^ ":") :: 
+	  		|_ -> (("if " ^ fst rb ^ ":") :: 
 	  			(List.map addTab (List.concat (List.rev (List.map string_of_stmt s1))))) @ 
 	  		 	("else:" :: (List.map addTab (List.concat (List.rev (List.map string_of_stmt s2))))))
 	
