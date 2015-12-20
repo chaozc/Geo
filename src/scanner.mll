@@ -63,9 +63,9 @@ rule token = parse
 | ['0' - '9']+ as lxm { INTEGERLIT(int_of_string lxm) } 
 
 (* Float *)
-| ['-']?['0'-'9']*'.'['0'-'9']+ ('e'['+' '-']?['0'-'9']+)? as flo {FLOATLIT(float_of_string flo)}
-| ['-']?['0'-'9']+'.'['0'-'9']* ('e'['+' '-']?['0'-'9']+)? as flo {FLOATLIT(float_of_string flo)}
-| ['-']?['0'-'9']+ ('e'['+' '-']?['0'-'9']+) as flo {FLOATLIT(float_of_string flo)}
+| ['0'-'9']*'.'['0'-'9']+ ('e'['+' '-']?['0'-'9']+)? as flo {FLOATLIT(float_of_string flo)}
+| ['0'-'9']+'.'['0'-'9']* ('e'['+' '-']?['0'-'9']+)? as flo {FLOATLIT(float_of_string flo)}
+| ['0'-'9']+ ('e'['+' '-']?['0'-'9']+) as flo {FLOATLIT(float_of_string flo)}
 
 (* Char *)
 | '''(['\000' - '\038' '\040' - '\127'] as chr)''' {CHARLIT(chr)}

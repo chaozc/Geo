@@ -21,6 +21,7 @@ type expr =
   	| Circle of expr list
   	| List of expr list
   	| Not of expr
+  	| Minus of expr
 
 
 type stmt = 

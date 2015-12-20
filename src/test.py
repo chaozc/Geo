@@ -7,4 +7,7 @@ msg.grid(row=0, column=0)
 
 a = 1. + 1.
 msg.insert(tk.END,a)
+a = -a - a - a - a
+msg.insert(tk.END,-1.1 + 2. - 1. * a)
+msg.insert(tk.END,not(True))
 root.mainloop()

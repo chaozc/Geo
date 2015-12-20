@@ -40,7 +40,7 @@ let translate (declarations, statements) =
 	  | Float(l) -> (string_of_float l, "float")
 	  | String(s) -> ("\"" ^ s ^ "\"", "string")
 	  | Char(l) -> ("\'" ^ (String.make 1 l) ^ "\'", "char")
-	  | Bool(l) -> (string_of_bool l, "bool")
+	  | Bool(l) -> let tran_bool x = if (x=true) then "True" else "False" in (tran_bool l, "bool")
 	  | Id(s) ->  (s, try StringMap.find s env.contents.vars with Not_found -> raise(Failure("Undeclared Variable " ^ s))) 
 	  | Binop(e1, o, e2) ->
 	  	  let result1 = string_of_expr e1 and result2 = string_of_expr e2 in
@@ -67,8 +67,14 @@ let translate (declarations, statements) =
 	      (snd result_op)
 	      ^ " " ^
 	      (fst result2), fst result_op)
-
-	  | Not(e) -> let result = string_of_expr e in ("not(" ^ fst result ^ ")", snd result)
+	  | Minus(e) ->
+	  	let result = string_of_expr e in
+	  	let ck_minus x = if (x="int"||x="float") then x else raise(Failure("Undefined Operation: -" ^ x)) in
+	  	let tp = ck_minus (snd result) in
+	  	("-" ^ (fst result), tp)
+	  | Not(e) -> let result = string_of_expr e in 
+	  let ck_not x = if x == "bool" then x else raise(Failure("Undefined Operation: not(" ^ x^")")) in
+	  ("not(" ^ fst result ^ ")", snd result)
 	  | Assign(v, e) -> let result = string_of_expr e in (env := {vars = StringMap.add v (snd result) env.contents.vars; funcs = env.contents.funcs; get_call = env.contents.get_call; func_opt = env.contents.func_opt}; (v ^ " = " ^ fst result, snd result))
 	  
 	  | Noexpr -> ("", "none")
