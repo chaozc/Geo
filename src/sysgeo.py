@@ -151,11 +151,15 @@ class line(object):
 				self.end_point_2 = self.end_point_2 + self.runStep[2]
 			self.line_=Segment(Point(self.end_point_1, self.a * self.end_point_1 + self.b), Point(self.end_point_2, self.a * self.end_point_2 + self.b)) 
 	def getY(self,x):
+		if(self.a == float('inf')):
+			return None
 		if(self.isLine or self.line_.contains(Point(x,x*self.x+self.y))):
 			return self.a*x+self.b
 		else:
 			return None
 	def getX(self,y):
+		if(self.a == float('inf')):
+			return line_.points()[0].x
 		if(self.isLine or self.line_.contains(Point((y-self.b)/self.a,y))):
 			return (y-self.b)/self.a
 		else:
@@ -170,6 +174,11 @@ class line(object):
 			return dot(0,0)
 		else:
 			return dot(self.line_.midpoint)
+	def getEndpoints(self):
+		if(isLine):
+			return None
+		else:
+			return list(self.line_.points())
 	def length(self):	# Segment ONLY
 		if(self.isLine):
 			return 0
@@ -245,12 +254,10 @@ class circle(object):
 		return self.center
 	def getRadius(self):
 		return self
-	def setCenter(self,a,b=None):
-		if(isinstance(a,Point) and (b is None)):
+	def setCenter(self,a):
+		if(isinstance(a,Point)):
 			self.center = a
-		else:
-			self.center=dot(a,b)
-		self.circle_=Circle(self.center,self.radius)
+			self.circle_=Circle(self.center,self.radius)
 	def setRadius(self,r):
 		self.radius=r
 		self.circle_=Circle(self.center,self.radius)
@@ -309,15 +316,71 @@ class circle(object):
 			tem=temp
 		return tem
 
+class polygon(object):
+	def __init__(self, a):
+		self.allpoints = a
+		self.polygon_ = Polygon(*a)
+		self.runStep = [0,0]
+	def setRunstep(self,pos,val):
+		if(pos == 'x'):
+			self.runStep[0]=val
+		elif(pos == 'y'):
+			self.runStep[1]=val
+	def getRunstep(self,pos):
+		if(pos == 'x'):
+			return self.runStep[0]
+		elif(pos == 'y'):
+			return self.runStep[1]
+	def getPoints(self):
+		return self.allpoints
+	def getArea(self):
+		return self.polygon_.area()
+	def getAngle(self):
+		return self.polygon_.angles()
+	def getParimeter(self):
+		return self.polygon_.perimeter()
+	def getCentroid(self):
+		return dot(self.polygon_.centroid())
+	def getSides(self):
+		return self.polygon_.sides()
+	def intersect(self,obj):
+		olist = intersection(self, obj)
+		temp = []
+		for o in olist:
+			if(isinstance(o,Segment)):
+				endpoints = o.points()
+				temp.append(line(endpoints[0],endpoints[1],endpoints[0].x,endpoints[1].x))
+			elif(isinstance(o,Point)):
+				temp.append(dot(o.x,o.y))
+		return temp
+	def renew(self,pos):
+		if(pos == 'x'):
+			for i in self.allpoints:
+				i.x = i.x + self.runStep[0]
+		elif(pos == 'y'):
+			for i in self.allpoints:
+				y = self.center.y + self.runStep[1]
+		self.polygon_ = Polygon(*self.allpoints)
+
+
 class runset:
 	def __init__(self,runtime):
 		self.objlist = []
 		self.paralist = []
 		self.runtime = runtime
 		self.runenable = False
-	def addpara(self,obj,para):
+	def addPara(self,obj,para):
 		self.objlist.append(obj)
 		self.paralist.append(para)
+		return True
+	def removePara(self,obj,para):
+		count=0
+		while(count<len(objlist)):
+			if(self.objlist[count] == obj and self.paralist[count] == para):
+				del self.objlist[count]
+				del self.paralist[count]
+				return True
+		return False
 	def renew(self):
 		index=0
 		for obj in self.objlist:
