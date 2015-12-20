@@ -84,8 +84,8 @@ let translate (declarations, statements) =
 	  | Id(s) ->  (PyId(s), try StringMap.find s env.contents.vars with Not_found -> raise(Failure("Undeclared Variable " ^ env.contents.get_call ^ ":"^s))) 
 	  | Binop(e1, o, e2) ->
 	  	  let result1 = py_of_expr e1 and result2 = py_of_expr e2 in
-	  	  let digit_op_match op a b = if (((a="string"||a="int"||a="float"||a="char")&&a=b)||a="list_ele"||b="list_ele") then (true, a) else if ((a="float" && b="int")||(a="int" && b="float")) then (true, "float") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in
-	  	  let eq_op_match op a b = if (((a=b&&(a="string"||a="int"||a="float"||a="bool"))&&a=b)||a="list_ele"||b="list_ele") then (true, "bool") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in 
+	  	  let digit_op_match op a b = if (((a="string"||a="int"||a="float")&&a=b)||a="list_ele"||b="list_ele") then (true, a) else if ((a="float" && b="int")||(a="int" && b="float")) then (true, "float") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in
+	  	  let eq_op_match op a b = if (((a=b&&(a="string"||a="int"||a="float"||a="bool"||"char"))&&a=b)||a="list_ele"||b="list_ele") then (true, "bool") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in 
 	  	  let bool_op_match op a b = if (((a=b && a="bool")&&a=b)||a="list_ele"||b="list_ele") then (true, "bool") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in 
 	      let get_type_bi o = 
 	      (match o with
