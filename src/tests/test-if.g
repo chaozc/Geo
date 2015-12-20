@@ -1,11 +1,7 @@
 @panel panel1
-if(5==3):
+if('c'=='d'):
 printT("5==3");
-//else:
-//if(5<3):
-//printT("5<3");
-//else:
+else:
 printT("5>3");
-//end
 end
 @end

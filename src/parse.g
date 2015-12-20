@@ -1,7 +1,4 @@
 @panel panel1
-a = 1.+1.;
-print(a);
-a = -a-a-a-a;
-print(-1.1+2.-1.*a);
-print(!true);
+a = line(1,2,4);
+b = circle(2,5,"7");
 @end

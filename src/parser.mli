@@ -43,6 +43,7 @@ type token =
   | IN
   | LINE
   | CIRCLE
+  | RUNSET
   | TYPE of (string)
   | PRINT
   | PRINTT

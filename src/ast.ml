@@ -23,6 +23,7 @@ type expr =
   	| Not of expr
   	| Minus of expr
   	| ListEle of expr * expr
+  	| Runset of expr list
 
 
 type stmt = 
@@ -33,13 +34,15 @@ type stmt =
 	| While of expr * stmt list
 	| Print of expr
 	| PrintT of expr
+	| Run of expr * stmt list
 
 
 type fdecl = {
-	tp : string;
     fname : string;
     paras : (string * string) list;
     body : stmt list;
+    tp : string;
+
 	}
 
 type program = fdecl list * stmt list

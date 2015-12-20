@@ -13,9 +13,7 @@ class dot(Point):
 			Point.__init__(self,x,y)
 		self.runStep = [0,0]
 	def __str__(self):
-		x = "%.5f" % float(self.x)
-		y = "%.5f" % float(self.y)
-		retstr = '['+x+','+y+']'
+		retstr = '['+str(self.x)+','+str(self.y)+']'
 		return retstr
 	__repr__ = __str__
 	def getX(self):
@@ -82,14 +80,10 @@ class line(object):
 				self.end_point_1=self.end_point_2=a.x
 		self.runStep = [0,0,0]
 	def __str__(self):
-		a = "%.5f" % self.a
-		b = "%.5f" % self.b
 		if(self.isLine):
-			retstr = 'line y='+a+'x+'+b
+			retstr = 'line y='+str(self.a)+'x+'+str(self.b)
 		else:
-			end_point_1= "%.5f" % float(self.end_point_1)
-			end_point_2= "%.5f" % float(self.end_point_2)
-			retstr = 'Segment y='+a+'x+'+b+' with x in ['+end_point_1+','+end_point_2+']'
+			retstr = 'Segment y='+str(self.a)+'x+'+str(self.b)+' with x in ['+str(self.end_point_1)+','+str(self.end_point_2)+']'
 		return retstr
 	__repr__ = __str__
 	def getPara(self,pos):
