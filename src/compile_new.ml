@@ -25,12 +25,15 @@ let env = ref {
 	func_opt = StringMap.empty;
 };;
 
+env := {vars = StringMap.empty; funcs = StringMap.add "list:append" "void" env.contents.funcs; get_call = ""; func_opt = StringMap.add "list:append" ["any"] env.contents.func_opt};;
+env := {vars = StringMap.empty; funcs = StringMap.add "list:pop" "void" env.contents.funcs; get_call = ""; func_opt = StringMap.add "list:pop" [] env.contents.func_opt};;
 
 env := {vars = StringMap.empty; funcs = StringMap.add "dot:distance" "float" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:distance" ["dot"] env.contents.func_opt};;
 env := {vars = StringMap.empty; funcs = StringMap.add "dot:getX" "float" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:getX" [] env.contents.func_opt};;
 env := {vars = StringMap.empty; funcs = StringMap.add "dot:getY" "float" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:getY" [] env.contents.func_opt};;
 env := {vars = StringMap.empty; funcs = StringMap.add "dot:setRunstep" "void" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:setRunstep" ["float"; "char"] env.contents.func_opt};;
 env := {vars = StringMap.empty; funcs = StringMap.add "dot:getRunstep" "float" env.contents.funcs; get_call = ""; func_opt = StringMap.add "dot:getRunstep" ["char"] env.contents.func_opt};;
+
 
 
 
@@ -41,7 +44,7 @@ let translate (declarations, statements) =
 	  | String(s) -> ("\"" ^ s ^ "\"", "string")
 	  | Char(l) -> ("\'" ^ (String.make 1 l) ^ "\'", "char")
 	  | Bool(l) -> let tran_bool x = if (x=true) then "True" else "False" in (tran_bool l, "bool")
-	  | Id(s) ->  (s, try StringMap.find s env.contents.vars with Not_found -> raise(Failure("Undeclared Variable " ^ s))) 
+	  | Id(s) ->  (s, try StringMap.find s env.contents.vars with Not_found -> raise(Failure("Undeclared Variable " ^ env.contents.get_call ^ ":"^s))) 
 	  | Binop(e1, o, e2) ->
 	  	  let result1 = string_of_expr e1 and result2 = string_of_expr e2 in
 	  	  let digit_op_match op a b = if ((a="string"||a="int"||a="float")&&a=b) then (true, a) else if ((a="float" && b="int")||(a="int" && b="float")) then (true, "float") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in
@@ -50,9 +53,11 @@ let translate (declarations, statements) =
 	      let get_type_bi o = 
 	      (match o with
 		  Add -> let ck = digit_op_match "+" (snd result1) (snd result2) in (snd ck, "+") 
-		| Sub -> let ck = digit_op_match "+" (snd result1) (snd result2) in (snd ck, "-") 
-		| Mult -> let ck = digit_op_match "+" (snd result1) (snd result2) in (snd ck, "*") 
-		| Div -> let ck = digit_op_match "+" (snd result1) (snd result2) in (snd ck, "/")
+		| Sub -> let ck = digit_op_match "-" (snd result1) (snd result2) in (snd ck, "-") 
+		| Mult -> let ck = digit_op_match "*" (snd result1) (snd result2) in (snd ck, "*") 
+		| Div -> let ck = digit_op_match "/" (snd result1) (snd result2) in (snd ck, "/")
+		| Mod -> let ck = digit_op_match "%" (snd result1) (snd result2) in (snd ck, "%")
+		| Exp -> let ck = digit_op_match "^" (snd result1) (snd result2) in (snd ck, "**")
 	    | Equal -> let ck = eq_op_match "==" (snd result1) (snd result2) in (snd ck, "==") 
 	    | Neq -> let ck = eq_op_match "!=" (snd result1) (snd result2) in (snd ck, "!=")
 	    | Less -> let ck = eq_op_match "<" (snd result1) (snd result2) in (snd ck, "<") 
@@ -63,10 +68,10 @@ let translate (declarations, statements) =
 	    | Or -> let ck = bool_op_match "|" (snd result1) (snd result2) in (snd ck, "or")
 	    ) in
 	      let result_op = get_type_bi o in 
-	      ((fst result1) ^ " " ^
+	      ("(" ^(fst result1) ^ " " ^
 	      (snd result_op)
 	      ^ " " ^
-	      (fst result2), fst result_op)
+	      (fst result2)^")", fst result_op)
 	  | Minus(e) ->
 	  	let result = string_of_expr e in
 	  	let ck_minus x = if (x="int"||x="float") then x else raise(Failure("Undefined Operation: -" ^ x)) in
@@ -87,12 +92,16 @@ let translate (declarations, statements) =
 	  | Line(x) -> ("line(" ^ String.concat ", " (List.map fst (List.map string_of_expr x)) ^ ")", "line")
 	  | Circle(x) ->  ("circle(" ^ String.concat ", " (List.map fst (List.map string_of_expr x)) ^ ")", "circle")
 	  | List(x) -> ("[" ^  String.concat ", " (List.map fst (List.map string_of_expr x)) ^ "]", "list")
+	  | ListEle(x1, x2) -> 
+	  		let ln_ = string_of_expr x1 and id_ = string_of_expr x2 in
+	  			let ck_list ln id = if ((snd ln = "list")&&((snd id) = "int")) then ((fst ln) ^ "[" ^ (fst id) ^ "]", "list_ele") else raise(Failure("List Error: " ^ (snd ln) ^ "[" ^ (snd id) ^ "]")) in
+	  			let ans = ck_list ln_ id_ in ans
 	  | Call(f, el) ->
 	      let gtc = env.contents.get_call in
 	      let result_el = List.map string_of_expr el in
 	      let returnType =  try StringMap.find (gtc ^ ":" ^ f) env.contents.funcs with Not_found -> raise(Failure("Undeclared Fuction " ^ gtc ^ ":" ^ f))
 	  in  let func_opt_types = StringMap.find (gtc ^ ":" ^ f) env.contents.func_opt 
-	in    let opt_match a b = if (a=b) then true else if (a="int" && b="float") then true else false
+	in    let opt_match a b = if (a=b) then true else if (b="int" && a="float") then true else if (a="any"||b="list_ele") then true else false
 in        let opts_match a b = if (List.for_all2 opt_match a b) then true else raise(Failure("Fuction Parameter Not Match\n" ^ "Required " ^ gtc ^ ":" ^ f ^ "(" ^ (String.concat "," func_opt_types) ^ ")\n" ^ "Get " ^gtc ^ ":" ^ f ^ "(" ^ (String.concat "," (List.map snd result_el)) ^ ")"))
 in let mat = try opts_match func_opt_types (List.map snd result_el) with Invalid_argument "List.for_all2" -> raise(Failure("Fuction Parameter Not Match\n" ^ "Required " ^ gtc ^ ":" ^ f ^ "(" ^ (String.concat "," func_opt_types) ^ ")\n" ^ "Get " ^gtc ^ ":" ^ f ^ "(" ^ (String.concat "," (List.map snd result_el)) ^ ")")) in
 	      f ^ "(" ^ String.concat ", " (List.map fst result_el) ^ ")",returnType

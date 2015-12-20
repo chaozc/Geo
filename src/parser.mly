@@ -22,7 +22,8 @@
 %right NOT
 %left LT GT LEQ GEQ
 %left PLUS MINUS
-%left TIMES DIVIDE
+%left TIMES DIVIDE PERCENT
+%left EXP
 %left GET
 
 %start program
@@ -105,6 +106,8 @@ expr:
   	| expr GEQ    expr { Binop($1, Geq,   $3) }
     | expr AND    expr { Binop($1, And,   $3) }
     | expr OR     expr { Binop($1, Or,   $3) }
+    | expr PERCENT expr { Binop($1, Mod,   $3)}
+    | expr EXP    expr { Binop($1, Exp,   $3) }
     | NOT expr         { Not($2) }
   	| ID ASSIGN expr   { Assign($1, $3) }
   	| ID LPAREN actuals_opt RPAREN { Call($1, $3) }
@@ -114,6 +117,7 @@ expr:
     | LINE LPAREN actuals_opt RPAREN { Line($3) }
     | CIRCLE LPAREN actuals_opt RPAREN { Circle($3) }
     | LBRACE actuals_opt RBRACE { List($2) }
+    | expr LBRACE expr RBRACE { ListEle($1, $3) }
 
 
 

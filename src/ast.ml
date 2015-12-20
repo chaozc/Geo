@@ -1,4 +1,4 @@
-type op = Add | Sub | Mult | Div | Equal | Neq | Less | Leq | Greater | Geq | And | Or 
+type op = Add | Sub | Mult | Div | Equal | Neq | Less | Leq | Greater | Geq | And | Or | Mod | Exp
 
 type preset =
 	 Preset of string * string 
@@ -22,6 +22,7 @@ type expr =
   	| List of expr list
   	| Not of expr
   	| Minus of expr
+  	| ListEle of expr * expr
 
 
 type stmt = 
