@@ -1,14 +1,13 @@
 open Ast
 open Sys
-let prestring = ["from sysgeo import *\n";
-				 "import Tkinter as tk\n" ;
-				 "from sympy.geometry import *\n"; 
-				 "root = tk.Tk()\n";
+let prestring = ["import Tkinter as tk\n" ;
+				 "from sysgeo import *\n"; ]
+				(*) "root = tk.Tk()\n";
 				 "root.title(\"Geo\")\n";
 				 "msg = tk.Listbox(root, width=50, height=10)\n";
-				 "msg.grid(row=0, column=0)\n"]
+				 "msg.grid(row=0, column=0)\n"]*)
 
-let finalstring = ["root.mainloop()"]
+let finalstring = [""](*["root.mainloop()"]*)
 
 module StringMap = Map.Make(String)
 
