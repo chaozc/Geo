@@ -36,10 +36,11 @@ type stmt =
 
 
 type fdecl = {
-	tp : string;
     fname : string;
     paras : (string * string) list;
     body : stmt list;
+    tp : string;
+
 	}
 
 type program = fdecl list * stmt list

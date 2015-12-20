@@ -29,7 +29,7 @@ z = {1,1012,47, {999}};
 print (z#3);
 a =(1+2)*3^5;
 print (a);
-for i in {1,2,3}:
-print(101);
+for i in {1}:
+print(false|true);
 end
 @end

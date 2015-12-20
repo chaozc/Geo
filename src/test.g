@@ -2,7 +2,7 @@
 print("hello world");
 print('s');
 i = 0;
-m = 1.1+'1';
+
 p = 1.2+0.3+0;
 print(1+1);
 function printa(a:int, b:int):void:
@@ -17,7 +17,7 @@ function printa(a:int, b:int):void:
  end
  print("endwhile");
 
- if(a>0):
+ if(a=0):
   a = a + 1;
  else:
   a = a - 1;
@@ -26,7 +26,7 @@ function printa(a:int, b:int):void:
  print(a);
  
 i = 1;
- for i in "hello":
+ for i in {1,3}:
 
   print(i);
  end
