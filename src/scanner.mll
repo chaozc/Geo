@@ -48,7 +48,7 @@ rule token = parse
 | "for" { FOR }			
 | "function" {FUNCTION}	| "if" { IF }
 | "import" { IMPORT } 	| "in" { IN }
-		| "break" { BREAK }
+| "polygon" { POLYGON }		| "break" { BREAK }
 | "model" {MODEL}		| "return" { RETURN }
 | "run" {RUN}			| "const" { CONST }
 | "submodel" {SUBMODEL}	| "line" {LINE}

@@ -236,6 +236,8 @@ let translate (declarations, statements) =
 
 	  | Circle(x) ->  (PyCall("circle", (List.map fst (List.map py_of_expr x))), "circle")
 
+	  | Polygon(x) ->  (PyCall("polygon", (List.map fst (List.map py_of_expr x))), "polygon")
+
 	  | Runset(x) ->  (PyCall("runset", (List.map fst (List.map py_of_expr x))), "runset")
 
 	  | List(x) -> (PyList(List.map fst (List.map py_of_expr x)), "list")

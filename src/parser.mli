@@ -43,6 +43,7 @@ type token =
   | LINE
   | CIRCLE
   | RUNSET
+  | POLYGON
   | TYPE of (string)
   | PRINT
   | PRINTT

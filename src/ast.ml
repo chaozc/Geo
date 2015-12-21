@@ -19,6 +19,7 @@ type expr =
   	| Line of expr list
   	| Circle of expr list
   	| List of expr list
+  	| Polygon of expr list
   	| Not of expr
   	| Minus of expr
   	| ListEle of string * expr
