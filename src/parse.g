@@ -23,8 +23,8 @@ end
 i = 9;
 j = 10;
 if (j == 7):
-print(i);print(1);print(1);
+print(i);print(1);print(1); print(bad(j));
 else:
-print(0);print(1);print(1);
+print(0);print(1);print(1); print(bad(i));
 end
 @end
