@@ -12,4 +12,11 @@ msg.insert(tk.END,b[1])
 b[1] = b[2]
 msg.insert(tk.END,b[1])
 c = polygon(1, 2, 3)
+r = runset(1, 3, 5)
+def runfun__():
+	msg.insert(tk.END,"h")
+	msg.insert(tk.END,"hh")
+	break
+	msg.insert(tk.END,"hhh")
+drawmain(r)
 root.mainloop()

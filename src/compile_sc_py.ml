@@ -336,7 +336,9 @@ in let ck_bool tp rb = if ((snd rb)="bool") then true else raise(Failure(tp ^ " 
 
 	  	| _ -> raise(Failure("Run must be followed by a variable with type 'runset' "))
 
-	  in PyWhile(PyId((ck_id e)^".run()"), List.map py_of_stmt (List.rev s))
+	  in (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt}; PyRun(PyId(ck_id e), List.map py_of_stmt (List.rev s)))
+
+	 | Break -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt}; PyBreak)
 
 	
 

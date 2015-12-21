@@ -52,6 +52,8 @@ let translate (declarations, statements) =
 	  if (id=PyNoexpr) 
 	  	then ((v) ^ " = " ^ result) :: []
 	  	else ((v) ^ "[" ^ (string_of_expr id) ^ "] = " ^ result) :: []
+	  | PyBreak -> ["break"]
+	  | PyRun(e, s) -> ("def runfun__():" ::  (List.map addTab (List.concat ((List.map string_of_stmt s))))) @ ["drawmain(" ^ string_of_expr e ^ ")"]
 	  | PyIf(e1, s1, s2) ->  
 	  let rb = string_of_expr e1 in 
 	  		match s2 with
@@ -60,6 +62,8 @@ let translate (declarations, statements) =
 	  		|_ -> (("if " ^ rb ^ ":") :: 
 	  			(List.map addTab (List.concat ((List.map string_of_stmt s1))))) @ 
 	  		 	("else:" :: (List.map addTab (List.concat ((List.map string_of_stmt s2)))))
+
+	  
 	
 	in let rec translate_stmts = function
 		  [] -> []

@@ -26,6 +26,8 @@ type pyStmt =
 	| PyPrint of pyExpr
 	| PyPrintT of pyExpr
 	| PyAssign of string * pyExpr * pyExpr
+	| PyRun of  pyExpr * pyStmt list
+	| PyBreak
 
 type pyFuncDecl = {
     pyfname : string;
