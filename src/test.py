@@ -37,8 +37,10 @@ if (j == 7):
 	msg.insert(tk.END,i)
 	msg.insert(tk.END,1)
 	msg.insert(tk.END,1)
+	msg.insert(tk.END,bad(j))
 else:
 	msg.insert(tk.END,0)
 	msg.insert(tk.END,1)
 	msg.insert(tk.END,1)
+	msg.insert(tk.END,bad(i))
 root.mainloop()
