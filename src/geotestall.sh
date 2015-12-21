@@ -8,11 +8,11 @@
 ########################################
 
 GEO='./geo.sh'
-globallog=testall.log
-rm -f $globallog
+opfile=''
+copfile=''
+keep=0
 error=0
 globalerror=0
-keep=0
 Usage() {
 	echo "************************************************"
 	echo -e "\t\tGeo tests shell\t\t"
@@ -24,7 +24,11 @@ Usage() {
 }
 
 Compile(){
+	echo "Compiling $1..."
 	eval "$GEO -c $1"
+}
+
+Execute(){
 	opname=`echo $1 | sed 's/.py/.out/'`
 	eval "python $1 > $opname"
 }
@@ -46,37 +50,6 @@ Compare() {
     }
 }
 
-Check(){
-	error=0
-	Compile $1
-    basename=`echo $1 | sed 's/.*\\///
-                             s/.g//'`
-    basedir="`echo $1 | sed 's/\/[^\/]*$//'`/."
-    reffile=`echo $a | sed 's/.g$//'`
-    echo -n "$basename..."
-
-    echo 1>&2
-    echo "###### Testing $basename" 1>&2
-
-    generatedfiles=""
-
-    generatedfiles="$generatedfiles ${basename}.out" &&
-    Compare ${reffile}.out ${reffile}.ref ${reffile}.diff
-
-
-    if [ $error -eq 0 ] ; then
-	if [ $keep -eq 0 ] ; then
-	    rm -f $generatedfiles
-	fi
-	echo "OK"
-	echo "###### SUCCESS" 1>&2
-    else
-	echo "###### FAILED" 1>&2
-	globalerror=$error
-    fi
-}
-
-
 while getopts kh c; do
     case $c in
 	k) # Keep intermediate files
@@ -96,17 +69,28 @@ then
 else
     files="tests/test-*.g"
 fi
+
 for file in $files
 do
-	case $file in
-	*test-*)
-		Check $file 2>> $globallog
-		;;
-	*)
-	    echo "unknown file type $file"
-	    globalerror=1
-	    ;;
-    esac
+	copfile=`echo $file | sed 's/.g$/.py/'`
+	Compile $file
+	Execute $copfile
 done
-	
+generatedfiles=""
+for file in $files
+do
+	reffile=`echo $file | sed 's/.g$//'`
+	echo $reffile
+	Compare ${reffile}.out ${reffile}.ref ${reffile}.diff
+done
+if [ $error -eq 0 ] ; then
+	if [ $keep -eq 0 ] ; then
+	    rm -f $generatedfiles
+	fi
+	echo "OK"
+	echo "###### SUCCESS" 1>&2
+    else
+	echo "###### FAILED" 1>&2
+	globalerror=$error
+fi
 exit $globalerror
