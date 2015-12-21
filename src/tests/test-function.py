@@ -1,9 +1,14 @@
 from sysgeo import *
 import Tkinter as tk
-def test(count):
-	while ((count != 0)):
-	print count
-	count = (count - 1)
-PI = 3.14159265359
-test(5)
+def test1(str):
+	if (str == "PLT"):
+		return True
+	else:
+		return False
+def test2():
+	if test1("PLT"):
+		print "is PLT"
+	else:
+		print "is not PLT"
+test2()
 

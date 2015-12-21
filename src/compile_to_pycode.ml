@@ -1,7 +1,7 @@
 open Pyast
 let prestring = ["from sysgeo import *\n";
 				 "import Tkinter as tk\n" ;]
-				(*) "root = tk.Tk()\n";
+				 (*"root = tk.Tk()\n";
 				 "root.title(\"Geo\")\n";
 				 "msg = tk.Listbox(root, width=50, height=10)\n";
 				 "msg.grid(row=0, column=0)\n"]*)
@@ -59,7 +59,7 @@ let translate (declarations, statements) =
 	
 	in let rec translate_stmts = function
 		  [] -> []
-		| hd::tl -> let result1 = (String.concat "\n" (string_of_stmt hd)) and result2 = (translate_stmts tl) in (result1::result2)
+		| hd::tl -> let result1 = (string_of_stmt hd) and result2 = (translate_stmts tl) in (result1 @ result2)
 	in let string_of_func fdecl =  "def " ^ fdecl.pyfname ^ "(" ^ (String.concat ", " fdecl.pyparas) ^ "):\n\t" ^ (String.concat "\n\t" (translate_stmts fdecl.pybody))
 
 	in let rec translate_funcs = function
