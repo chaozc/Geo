@@ -411,6 +411,13 @@ class polygon(object):
 		self.allpoints = a
 		self.polygon_ = Polygon(*a)
 		self.runStep = [0,0]
+	def __str__(self):
+		res="polygon "
+		for i in self.allpoints:
+			x="%.5f" % i.x
+			y="%.5f" % i.y
+			res+=("["+x+","+y+"] ")
+		return res
 	def setRunstep(self,pos,val):
 		if(pos == 'x'):
 			self.runStep[0]=val
