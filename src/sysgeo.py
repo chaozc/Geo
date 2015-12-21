@@ -184,6 +184,7 @@ class line(object):
 				half = float(self.line_.length/2)
 				p1=templine.pointAway(p,-half)
 				p2=templine.pointAway(p,half)
+				#print p1
 				self.end_point_1=float(min(p1.x,p2.x))
 				self.end_point_2=float(max(p1.x,p2.x))
 				self.line_=Segment(p1,p2)
@@ -202,24 +203,25 @@ class line(object):
 		elif(pos == 'x'):
 			return self.runStep[2]
 	def renew(self,pos):
-		if(pos == 'a'):
-			self.a = self.a + self.runStep[0]
-		elif(pos == 'b'):
-			self.b = self.b + self.runStep[1]
-		elif(pos == 'x'):
-			self.b = self.b - self.runStep[2]*self.a #!!!!!! 
-		if(self.isLine):
-			self.line_=Line(Point(0,self.b), Point(1, self.a+self.b))
-		else:
+		if(self.a!=float("inf")):
 			if(pos == 'a'):
-				dotM = self.getMidpoint()
-				templine = line(self.a, self.b)
-				self.end_point_1 = float(templine.pointAway(dotM,-self.line_.length/2).x)
-				self.end_point_2 = float(templine.pointAway(dotM, self.line_.length/2).x)
-			if(pos == 'x'):
-				self.end_point_1 = self.end_point_1 + self.runStep[2]
-				self.end_point_2 = self.end_point_2 + self.runStep[2]
-			self.line_=Segment(Point(self.end_point_1, self.a * self.end_point_1 + self.b), Point(self.end_point_2, self.a * self.end_point_2 + self.b)) 
+				self.a = self.a + self.runStep[0]
+			elif(pos == 'b'):
+				self.b = self.b + self.runStep[1]
+			elif(pos == 'x'):
+				self.b = self.b - self.runStep[2]*self.a #!!!!!! 
+			if(self.isLine):
+				self.line_=Line(Point(0,self.b), Point(1, self.a+self.b))
+			else:
+				if(pos == 'a'):
+					dotM = self.getMidpoint()
+					templine = line(self.a, self.b)
+					self.end_point_1 = float(templine.pointAway(dotM,-self.line_.length/2).x)
+					self.end_point_2 = float(templine.pointAway(dotM, self.line_.length/2).x)
+				if(pos == 'x'):
+					self.end_point_1 = self.end_point_1 + self.runStep[2]
+					self.end_point_2 = self.end_point_2 + self.runStep[2]
+				self.line_=Segment(Point(self.end_point_1, self.a * self.end_point_1 + self.b), Point(self.end_point_2, self.a * self.end_point_2 + self.b)) 
 	def getY(self,x):
 		if(self.a == float('inf')):
 			return None
@@ -270,8 +272,11 @@ class line(object):
 		else:
 			return None
 	def pointAway(self,p,dis):
-		if(not self.line_.contains(p)):
-			return None
+		# if(not self.line_.contains(p)):
+		# 	print p
+		# 	print self
+		# 	print "mark"
+		# 	return None
 		if(self.a!=float('inf')):
 			deltax = sqrt((dis**2)/(self.a**2+1))
 			if(dis < 0):
@@ -375,7 +380,7 @@ class circle(object):
 			self.center = dot(x,self.center.y)
 		elif(pos == 'y'):
 			y = self.center.y + self.runStep[1]
-			self.center = dot(x,self.center.y)
+			self.center = dot(self.center.x,y)
 		elif(pos == 'r'):
 			self.radius = self.radius + self.runStep[2]
 		self.circle_ = Circle(self.center,self.radius)
@@ -411,6 +416,13 @@ class polygon(object):
 		self.allpoints = a
 		self.polygon_ = Polygon(*a)
 		self.runStep = [0,0]
+	def __str__(self):
+		res="polygon "
+		for i in self.allpoints:
+			x="%.5f" % i.x
+			y="%.5f" % i.y
+			res+=("["+x+","+y+"] ")
+		return res
 	def setRunstep(self,pos,val):
 		if(pos == 'x'):
 			self.runStep[0]=val
@@ -457,12 +469,19 @@ class runset:
 	def __init__(self,runtime,sleeptime=None):
 		self.objlist = []
 		self.paralist = []
+		self.marklist = []
+		self.runcount = 0
 		self.runtime = runtime
 		self.runenable = True
 		if(sleeptime is None):
 			self.sleeptime=0.5
 		else:
 			self.sleeptime = sleeptime
+	def getRuncount(self):
+		return self.runcount
+	def mark(self,p):
+		if (not (p in self.marklist)):
+			self.marklist.append(p)
 	def addPara(self,obj,para):
 		self.objlist.append(obj)
 		self.paralist.append(para)
@@ -485,10 +504,11 @@ class runset:
 	def disableRun(self):
 		self.runenable=False
 	def run(self):
-		sleep(self.sleeptime)
+		#sleep(self.sleeptime)
 		if(self.runenable and (self.runtime != 0)):
 			self.renew()
 			self.runtime=self.runtime-1
+			self.runcount = self.runcount + 1
 			return True
 		else:
 			return False

@@ -1,12 +1,8 @@
 open Pyast
-let prestring = ["from sysgeo import *\n";
-				 "import Tkinter as tk\n" ;
-				 "root = tk.Tk()\n";
-				 "root.title(\"Geo\")\n";
-				 "msg = tk.Listbox(root, width=50, height=10)\n";
-				 "msg.grid(row=0, column=0)\n"]
+let prestring = ["from Tkinter import *\n";
+				 "from sysgeo import *\n" ]
 
-let finalstring = ["root.mainloop()"]
+let finalstring = [""]
 
 
 let translate (declarations, statements) = 
@@ -53,7 +49,7 @@ let translate (declarations, statements) =
 	  	then ((v) ^ " = " ^ result) :: []
 	  	else ((v) ^ "[" ^ (string_of_expr id) ^ "] = " ^ result) :: []
 	  | PyBreak -> ["break"]
-	  | PyRun(e, s) -> ("def runfun__():" ::  (List.map addTab (List.concat ((List.map string_of_stmt s))))) @ ["drawmain(" ^ string_of_expr e ^ ")"]
+	  | PyRun(e, s) -> let str=string_of_expr e in (("def runfun__(" ^ str ^ "):") ::  (List.map addTab (List.concat ((List.map string_of_stmt s))))) @ ["drawmain(" ^ str ^ ")"]
 	  | PyIf(e1, s1, s2) ->  
 	  let rb = string_of_expr e1 in 
 	  		match s2 with

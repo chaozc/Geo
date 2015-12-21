@@ -136,6 +136,8 @@ env := {vars = StringMap.empty; funcs = StringMap.add "polygon:intersect" "list"
 
 env := {vars = StringMap.empty; funcs = StringMap.add "runset:mark" "void" env.contents.funcs; get_call = ""; func_opt = StringMap.add "runset:mark" ["dot"] env.contents.func_opt};;
 
+env := {vars = StringMap.empty; funcs = StringMap.add "runset:getRuncount" "int" env.contents.funcs; get_call = ""; func_opt = StringMap.add "runset:getRuncount" [] env.contents.func_opt};;
+
 let translate (declarations, statements) = 
 
 	let rec py_of_expr = function
