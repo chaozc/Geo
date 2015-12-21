@@ -2,38 +2,27 @@ from Tkinter import *
 from sysgeo import *
 
 PI = 3.14159265359
-dot1 = dot(3, 5)
-line1 = line(4, 5)
-line2 = line(dot(1, 2), dot(2, 3))
-line3 = line(4, 5, -5, 5)
-line4 = line(dot(0, -2), dot(0, 2), 0, 0)
-print line1
-print line2
-print line3
-print line4
-print line2.intersect(line4)
-print line3.distance(dot1)
-print line4.length()
-print line2.pointAway(dot(2, 3), 5)
-print line4.pointAway(dot(0, 0), 1)
-print line3.getEndpoints()
-print line3.getMidpoint()
-print line1.isParallel(line2)
-print line1.getX(5)
-print line4.getX(1)
-print line2.getY(0)
-line2.setRunstep('a', 0.5)
-line3.setRunstep('b', 1.)
-line3.setRunstep('x', 1.)
-r1 = runset(8, 0.1)
-r1.addPara(line2, 'a')
-r1.addPara(line3, 'b')
-r1.addPara(line3, 'x')
+c1 = circle(dot(0, 0), 2)
+c2 = circle(dot(2, 0), 2)
+l1 = line(dot(2, -4), dot(2, 4), 0, 0)
+l2 = line(dot(-2, 0), dot(6, 0), -2, 6)
+r1 = runset(360, 0.05)
+r1.addPara(c1, 'r')
+r1.addPara(c2, 'r')
+r1.addPara(l1, 'b')
+r1.addPara(l2, 'b')
 def runfun__(r1):
-	print line2
-	print line3
-	print line4
-	line4.rotateonPoint(dot(0, 0), (PI / 4))
+	p1 = c1.getPointbyarc(((r1.getRuncount() * PI) / -36))
+	print p1
+	l1.rotateonPoint(p1, (PI / 36))
+	l2.rotateonPoint(p1, (PI / 36))
+	c2.setCenter(p1)
+	t1 = l1.getEndpoints()
+	r1.mark(t1[0])
+	r1.mark(t1[1])
+	t1 = l2.getEndpoints()
+	r1.mark(t1[0])
+	r1.mark(t1[1])
 ##########################################
 global w
 global argv

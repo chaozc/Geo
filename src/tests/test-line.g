@@ -22,14 +22,14 @@ printT(line2.getY(0));
 line2.setRunstep('a',0.5);
 line3.setRunstep('b',1.0);
 line3.setRunstep('x',1.0);
-r1=runset(8,0.1);
-r1.addPara(line2,'a');
-r1.addPara(line3,'b');
-r1.addPara(line3,'x');
-run r1:
-printT(line2);
-printT(line3);
-printT(line4);
-line4.rotateonPoint([0,0],PI/4);
-end
+// r1=runset(8,0.1);
+// r1.addPara(line2,'a');
+// r1.addPara(line3,'b');
+// r1.addPara(line3,'x');
+// run r1:
+// printT(line2);
+// printT(line3);
+// printT(line4);
+// line4.rotateonPoint([0,0],PI/4);
+// end
 @end

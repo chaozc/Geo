@@ -11,6 +11,7 @@ GEO='./geo'
 opfile=''
 copfile=''
 keep=0
+compileonly=0
 Usage() {
 	echo "************************************************"
 	echo -e "\t\tGeo shell\t\t"
@@ -22,7 +23,9 @@ Usage() {
 }
 
 Compile(){
-	eval "$GEO<$1>$2"
+	eval "$GEO<$1>temp.gout"
+	eval "python insert.py temp.gout > $2"
+	rm -f temp.gout
 }
 
 Execute(){
@@ -42,8 +45,11 @@ Precat(){
 	echo @end >&2
 }
 
-while getopts kh c; do
-    case $c in
+while getopts khc ca; do
+    case $ca in
+    c)
+		compileonly=1
+		;;
 	k) # Keep intermediate files
 	    keep=1
 	    ;;
@@ -68,5 +74,7 @@ if [ $# -ge 1 ]; then
 	if [ $keep -eq 0 ]; then
 		rm -f $opfile
 	fi
-	Execute $copfile
+	if [ $compileonly -eq 0 ]; then
+		Execute $copfile
+	fi
 fi

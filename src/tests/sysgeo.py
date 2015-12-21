@@ -184,6 +184,7 @@ class line(object):
 				half = float(self.line_.length/2)
 				p1=templine.pointAway(p,-half)
 				p2=templine.pointAway(p,half)
+				#print p1
 				self.end_point_1=float(min(p1.x,p2.x))
 				self.end_point_2=float(max(p1.x,p2.x))
 				self.line_=Segment(p1,p2)
@@ -202,24 +203,25 @@ class line(object):
 		elif(pos == 'x'):
 			return self.runStep[2]
 	def renew(self,pos):
-		if(pos == 'a'):
-			self.a = self.a + self.runStep[0]
-		elif(pos == 'b'):
-			self.b = self.b + self.runStep[1]
-		elif(pos == 'x'):
-			self.b = self.b - self.runStep[2]*self.a #!!!!!! 
-		if(self.isLine):
-			self.line_=Line(Point(0,self.b), Point(1, self.a+self.b))
-		else:
+		if(self.a!=float("inf")):
 			if(pos == 'a'):
-				dotM = self.getMidpoint()
-				templine = line(self.a, self.b)
-				self.end_point_1 = float(templine.pointAway(dotM,-self.line_.length/2).x)
-				self.end_point_2 = float(templine.pointAway(dotM, self.line_.length/2).x)
-			if(pos == 'x'):
-				self.end_point_1 = self.end_point_1 + self.runStep[2]
-				self.end_point_2 = self.end_point_2 + self.runStep[2]
-			self.line_=Segment(Point(self.end_point_1, self.a * self.end_point_1 + self.b), Point(self.end_point_2, self.a * self.end_point_2 + self.b)) 
+				self.a = self.a + self.runStep[0]
+			elif(pos == 'b'):
+				self.b = self.b + self.runStep[1]
+			elif(pos == 'x'):
+				self.b = self.b - self.runStep[2]*self.a #!!!!!! 
+			if(self.isLine):
+				self.line_=Line(Point(0,self.b), Point(1, self.a+self.b))
+			else:
+				if(pos == 'a'):
+					dotM = self.getMidpoint()
+					templine = line(self.a, self.b)
+					self.end_point_1 = float(templine.pointAway(dotM,-self.line_.length/2).x)
+					self.end_point_2 = float(templine.pointAway(dotM, self.line_.length/2).x)
+				if(pos == 'x'):
+					self.end_point_1 = self.end_point_1 + self.runStep[2]
+					self.end_point_2 = self.end_point_2 + self.runStep[2]
+				self.line_=Segment(Point(self.end_point_1, self.a * self.end_point_1 + self.b), Point(self.end_point_2, self.a * self.end_point_2 + self.b)) 
 	def getY(self,x):
 		if(self.a == float('inf')):
 			return None
@@ -270,8 +272,11 @@ class line(object):
 		else:
 			return None
 	def pointAway(self,p,dis):
-		if(not self.line_.contains(p)):
-			return None
+		# if(not self.line_.contains(p)):
+		# 	print p
+		# 	print self
+		# 	print "mark"
+		# 	return None
 		if(self.a!=float('inf')):
 			deltax = sqrt((dis**2)/(self.a**2+1))
 			if(dis < 0):
@@ -431,17 +436,29 @@ class polygon(object):
 	def getPoints(self):
 		return self.allpoints
 	def getArea(self):
-		return self.polygon_.area()
+		return self.polygon_.area
 	def getAngle(self):
-		return self.polygon_.angles()
+		return self.polygon_.angles
 	def getParimeter(self):
-		return self.polygon_.perimeter()
+		return self.polygon_.perimeter
 	def getCentroid(self):
-		return dot(self.polygon_.centroid())
+		return dot(self.polygon_.centroid)
 	def getSides(self):
-		return self.polygon_.sides()
+		tm=[]
+		for i in self.polygon_.sides:
+			tm.append(line(i.points[0],i.points[1],i.points[0].x,i.points[1].x))
+		return tm
 	def intersect(self,obj):
-		olist = intersection(self, obj)
+		if(isinstance(obj,line)):
+			olist = self.polygon_.intersection(obj.line_)
+		elif(isinstance(obj,circle)):
+			olist = self.polygon_.intersection(obj.circle_)
+		elif(isinstance(obj,polygon)):
+			olist = self.polygon_.intersection(obj.polygon_)
+		elif(isinstance(obj,GeometryEntity)):
+			olist = self.polygon_.intersection(obj)
+		else:
+			return None
 		temp = []
 		for o in olist:
 			if(isinstance(o,Segment)):
@@ -465,12 +482,15 @@ class runset:
 		self.objlist = []
 		self.paralist = []
 		self.marklist = []
+		self.runcount = 0
 		self.runtime = runtime
 		self.runenable = True
 		if(sleeptime is None):
 			self.sleeptime=0.5
 		else:
 			self.sleeptime = sleeptime
+	def getRuncount(self):
+		return self.runcount
 	def mark(self,p):
 		if (not (p in self.marklist)):
 			self.marklist.append(p)
@@ -496,10 +516,11 @@ class runset:
 	def disableRun(self):
 		self.runenable=False
 	def run(self):
-		sleep(self.sleeptime)
+		#sleep(self.sleeptime)
 		if(self.runenable and (self.runtime != 0)):
 			self.renew()
 			self.runtime=self.runtime-1
+			self.runcount = self.runcount + 1
 			return True
 		else:
 			return False

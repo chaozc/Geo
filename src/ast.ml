@@ -36,6 +36,7 @@ type stmt =
 	| PrintT of expr
 	| Run of expr * stmt list
 	| Assign of string * expr * expr
+	| Break
 
 
 type fdecl = {

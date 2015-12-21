@@ -1,12 +1,8 @@
 open Pyast
-let prestring = ["from sysgeo import *\n";
-				 "import Tkinter as tk\n" ]
-				(*) "root = tk.Tk()\n";
-				 "root.title(\"Geo\")\n";
-				 "msg = tk.Listbox(root, width=50, height=10)\n";
-				 "msg.grid(row=0, column=0)\n"]*)
+let prestring = ["from Tkinter import *\n";
+				 "from sysgeo import *\n" ]
 
-let finalstring = [""](*["root.mainloop()"]*)
+let finalstring = [""]
 
 
 let translate (declarations, statements) = 
@@ -40,7 +36,7 @@ let translate (declarations, statements) =
 	in let rec string_of_stmt = function
 		PyExpr(e) -> (string_of_expr e)  :: []
 	  | PyPrintT(expr) -> ("print " ^ (string_of_expr expr)) :: []
-	  | PyPrint(expr) -> ("msg.insert(tk.END," ^ (string_of_expr expr) ^ ")") :: []
+	  | PyPrint(expr) -> ("print " ^ (string_of_expr expr)) :: []
 	  | PyWhile(e, s) -> let rb = string_of_expr e in ("while (" ^ rb ^ "):"):: (List.map addTab (List.concat ((List.map string_of_stmt s))))
 	  | PyFor(e1, e2, s) -> 
 	  let r1 = string_of_expr e1 and r2 = string_of_expr e2 in 
@@ -52,6 +48,8 @@ let translate (declarations, statements) =
 	  if (id=PyNoexpr) 
 	  	then ((v) ^ " = " ^ result) :: []
 	  	else ((v) ^ "[" ^ (string_of_expr id) ^ "] = " ^ result) :: []
+	  | PyBreak -> ["break"]
+	  | PyRun(e, s) -> let str=string_of_expr e in (("def runfun__(" ^ str ^ "):") ::  (List.map addTab (List.concat ((List.map string_of_stmt s))))) @ ["drawmain(" ^ str ^ ")"]
 	  | PyIf(e1, s1, s2) ->  
 	  let rb = string_of_expr e1 in 
 	  		match s2 with
@@ -60,6 +58,8 @@ let translate (declarations, statements) =
 	  		|_ -> (("if " ^ rb ^ ":") :: 
 	  			(List.map addTab (List.concat ((List.map string_of_stmt s1))))) @ 
 	  		 	("else:" :: (List.map addTab (List.concat ((List.map string_of_stmt s2)))))
+
+	  
 	
 	in let rec translate_stmts = function
 		  [] -> []

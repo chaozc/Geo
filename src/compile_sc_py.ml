@@ -136,6 +136,8 @@ env := {vars = StringMap.empty; funcs = StringMap.add "polygon:intersect" "list"
 
 env := {vars = StringMap.empty; funcs = StringMap.add "runset:mark" "void" env.contents.funcs; get_call = ""; func_opt = StringMap.add "runset:mark" ["dot"] env.contents.func_opt};;
 
+env := {vars = StringMap.empty; funcs = StringMap.add "runset:getRuncount" "int" env.contents.funcs; get_call = ""; func_opt = StringMap.add "runset:getRuncount" [] env.contents.func_opt};;
+
 let translate (declarations, statements) = 
 
 	let rec py_of_expr = function
@@ -336,7 +338,9 @@ in let ck_bool tp rb = if ((snd rb)="bool") then true else raise(Failure(tp ^ " 
 
 	  	| _ -> raise(Failure("Run must be followed by a variable with type 'runset' "))
 
-	  in PyWhile(PyId((ck_id e)^".run()"), List.map py_of_stmt (List.rev s))
+	  in (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt}; PyRun(PyId(ck_id e), List.map py_of_stmt (List.rev s)))
+
+	 | Break -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt}; PyBreak)
 
 	
 

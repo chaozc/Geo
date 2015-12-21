@@ -80,6 +80,7 @@ stmt:
     | RUN expr COLON stmt_list END { Run($2, $4) }
     | ID ASSIGN expr SEMI  { Assign($1, $3, Noexpr) }
     | ID DOLL LSQUAR expr RSQUAR ASSIGN expr SEMI { Assign($1, $7, $4) }
+    | BREAK SEMI{ Break }
 
 expr_opt:
     /* nothing */ { Noexpr }

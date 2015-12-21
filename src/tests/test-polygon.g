@@ -1,5 +1,18 @@
 @panel panel1
-p1=polygon([0,0],[5,0],[5,3],[0,3]);
+li={[0,0],[5,0],[5,3],[0,3]};
+l2={[0,0],[2,2],[0,4],[-2,2]};
+p1=polygon(li);
+p2=polygon(l2);
+print(p1);
+print(p1.getPoints());
+print(p1.getArea());
+print(p1.getAngle());
+print(p1.getParimeter());
+print(p1.getCentroid());
+print(p1.getSides());
+print(p1.intersect([5,6]));
+print(p1.intersect(line([0,0],[2,2])));
+print(p1.intersect(circle([0,0],3)));
 @end
 
 /*
