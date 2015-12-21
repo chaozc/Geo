@@ -14,7 +14,7 @@
 
 PI = 3.14159;
 
-//part b: System function declaration
+/*//part b: System function declaration
 
 function print(info:int const, ...):void;
 function print(info:float const, ...):void;
@@ -153,3 +153,5 @@ model polygons:
 	function getY(x:float const):float[]; 
 	function intersect(polygon1:polygon):float[];
 end
+
+// End of std.glib*/
