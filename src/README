@@ -1,6 +1,18 @@
 To run:
 
 sh install.sh
+OR
+./install.sh
+********************
+12/21/2015 - Update
+********************
+./geo.sh [options] [.g file]
+[options]:
+-k    Keep intermediate files
+-i    Build independent executable python code
+-c    Compile ONLY without execute it
+-h    Print this help
+
 ********************
 12/06/2015 - Update
 ********************
