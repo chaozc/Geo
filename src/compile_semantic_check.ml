@@ -59,7 +59,6 @@ let translate (declarations, statements) =
 	  | Not(e) -> let result = py_of_expr e in 
 	  let ck_not x = if (x="bool") then x else raise(Failure("Undefined Operation: !(" ^ x^")")) in 
 	  (ck_not (snd result); (PyNot(fst result), snd result))
-	  | Assign(v, e) -> let result = py_of_expr e in (env := {vars = StringMap.add v (snd result) env.contents.vars; funcs = env.contents.funcs; get_call = env.contents.get_call; func_opt = env.contents.func_opt}; (PyAssign(v, fst result), snd result))
 	  
 	  | Noexpr -> (PyNoexpr, "none")
 	  | Dot(x, y) -> let result1 = py_of_expr x and result2 = py_of_expr y in 
@@ -73,8 +72,8 @@ let translate (declarations, statements) =
 	  | Runset(x) ->  (PyCall("runset", (List.map fst (List.map py_of_expr x))), "runset")
 	  | List(x) -> (PyList(List.map fst (List.map py_of_expr x)), "list")
 	  | ListEle(x1, x2) -> 
-	  		let ln_ = py_of_expr x1 and id_ = py_of_expr x2 in
-	  			let ck_list ln id = if ((snd ln = "list")&&((snd id) = "int")) then (PyListEle((fst ln),(fst id)), "list_ele") else raise(Failure("List Error: " ^ (snd ln) ^ "[" ^ (snd id) ^ "]")) in
+	  		let ln_ = try (x1, StringMap.find x1 env.contents.vars)  with Not_found -> raise(Failure("Undeclared List " ^ x1)) and  id_ = py_of_expr x2 in
+	  			let ck_list ln id = if ((snd ln = "list")&&((snd id) = "int" || (snd id)="list_ele")) then (PyListEle((fst ln),(fst id)), "list_ele") else raise(Failure("List Error: " ^ (snd ln) ^ "[" ^ (snd id) ^ "]")) in
 	  			let ans = ck_list ln_ id_ in ans
 	  | Call(f, el) ->
 	      let gtc = env.contents.get_call in
@@ -91,6 +90,12 @@ in let mat = try opts_match func_opt_types (List.map snd result_el) with Invalid
 in let ck_bool tp rb = if ((snd rb)="bool") then true else raise(Failure(tp ^ " Statement Need Bool Expression")) 
 	in let rec py_of_stmt = function
 		Expr(e) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt}; PyExpr(fst (py_of_expr e)))
+	  | Assign(v, e, id) -> 
+	  let result = py_of_expr e in
+	  (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt};
+	   if (id=Noexpr)
+	   then  (env := {vars = StringMap.add v (snd result) env.contents.vars; funcs = env.contents.funcs; get_call = env.contents.get_call; func_opt = env.contents.func_opt}; PyAssign(v, fst result, PyNoexpr))
+	   else PyAssign(v, fst result, fst (py_of_expr id)))
 	  | PrintT(expr) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt}; PyPrintT(fst (py_of_expr expr)))
 	  | Print(expr) -> (env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt}; PyPrint(fst (py_of_expr expr)))
 	  | While(e, s) -> let rb = py_of_expr e in (ck_bool "While" rb;env := {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt}; PyWhile(fst rb, List.map py_of_stmt (List.rev s)))

@@ -2,7 +2,7 @@
 %token LPAREN RPAREN LBRACE RBRACE LSQUAR RSQUAR SEMI COLON GET COMMA ASSIGN DOLL
 %token PLUS MINUS TIMES DIVIDE PERCENT EXP
 %token EQ NEQ LT LEQ GT GEQ NOT	AND OR
-%token BREAK CONST ELSE END FOR FUNCTION IMPORT LIST MODEL RETURN RUN SUBMODEL WHILE IF IN LINE CIRCLE RUNSET
+%token BREAK CONST ELSE END FOR FUNCTION IMPORT  MODEL RETURN RUN SUBMODEL WHILE IF IN LINE CIRCLE RUNSET
 %token <string> TYPE
 %token PRINT PRINTT
 %token ENDOFPROGRAM
@@ -25,7 +25,6 @@
 %left TIMES DIVIDE PERCENT
 %left EXP
 %left GET
-%left DOLL
 
 %start program
 %type <Ast.program> program
@@ -79,6 +78,8 @@ stmt:
     | PRINTT LPAREN expr RPAREN SEMI { PrintT($3) }
     | FOR expr IN expr COLON stmt_list END { For($2, $4, $6) }
     | RUN expr COLON stmt_list END { Run($2, $4) }
+    | ID ASSIGN expr SEMI  { Assign($1, $3, Noexpr) }
+    | ID DOLL LSQUAR expr RSQUAR ASSIGN expr SEMI { Assign($1, $7, $4) }
 
 expr_opt:
     /* nothing */ { Noexpr }
@@ -111,7 +112,6 @@ expr:
     | expr PERCENT expr { Binop($1, Mod,   $3)}
     | expr EXP    expr { Binop($1, Exp,   $3) }
     | NOT expr         { Not($2) }
-  	| ID ASSIGN expr   { Assign($1, $3) }
   	| ID LPAREN actuals_opt RPAREN { Call($1, $3) }
   	| LPAREN expr RPAREN { $2 }
     | LSQUAR expr COMMA expr RSQUAR { Dot($2, $4) }
@@ -120,7 +120,7 @@ expr:
     | CIRCLE LPAREN actuals_opt RPAREN { Circle($3) }
     | RUNSET LPAREN actuals_opt RPAREN { Runset($3) }
     | LBRACE actuals_opt RBRACE { List($2) }
-    | expr DOLL expr { ListEle($1, $3) }
+    | ID DOLL LSQUAR expr RSQUAR { ListEle($1, $4) }
 
 
 

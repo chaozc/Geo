@@ -7,7 +7,6 @@ type pyExpr =
 	| PyChar of char
 	| PyId of string
 	| PyBinop of pyExpr * string * pyExpr
-	| PyAssign of string * pyExpr
   	| PyCall of string * pyExpr list
   	(*| PyDot of pyExpr * pyExpr*)
   	| PyGet_Call of pyExpr * pyExpr
@@ -16,7 +15,7 @@ type pyExpr =
   	| PyList of pyExpr list
   	| PyNot of pyExpr
   	| PyMinus of pyExpr
-  	| PyListEle of pyExpr * pyExpr
+  	| PyListEle of string * pyExpr
 
 type pyStmt = 
 	  PyExpr of pyExpr
@@ -26,6 +25,7 @@ type pyStmt =
 	| PyWhile of pyExpr * pyStmt list
 	| PyPrint of pyExpr
 	| PyPrintT of pyExpr
+	| PyAssign of string * pyExpr * pyExpr
 
 type pyFuncDecl = {
     pyfname : string;

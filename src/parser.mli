@@ -33,7 +33,6 @@ type token =
   | FOR
   | FUNCTION
   | IMPORT
-  | LIST
   | MODEL
   | RETURN
   | RUN

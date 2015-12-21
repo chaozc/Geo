@@ -23,15 +23,14 @@ let translate (declarations, statements) =
 	  | PyMinus(e) ->
 	  	let result = string_of_expr e in "-" ^ result
 	  | PyNot(e) -> let result = string_of_expr e in "not(" ^ result ^ ")"
-	  | PyAssign(v, e) -> let result = string_of_expr e in v ^ " = " ^ result
-	  
+
 	  | PyNoexpr -> ""
 
 	  | PyGet_Call(x, y) -> let result1 = string_of_expr x and result2 =  string_of_expr y
 							in result1 ^ "." ^ result2
 	  | PyList(x) -> "[" ^  String.concat ", " (List.map string_of_expr x) ^ "]"
 	  | PyListEle(x1, x2) -> 
-	  		let ln = string_of_expr x1 and id = string_of_expr x2 in ln ^ "[" ^ id ^ "]"
+	  		let id = string_of_expr x2 in x1 ^ "[" ^ id ^ "]"
 	  | PyCall(f, el) ->
 	      let result_el = List.map string_of_expr el in
 	      f ^ "(" ^ String.concat ", " result_el ^ ")"
@@ -48,6 +47,11 @@ let translate (declarations, statements) =
 	  	("for " ^ r1 ^ " in " ^ r2 ^ ":")
 	  	:: (List.map addTab (List.concat ((List.map string_of_stmt s))))
 	  | PyReturn(e) -> ("return " ^ (string_of_expr e)) :: []
+	  | PyAssign(v, e, id) -> 
+	  let result = string_of_expr e in
+	  if (id=PyNoexpr) 
+	  	then ((v) ^ " = " ^ result) :: []
+	  	else ((v) ^ "[" ^ (string_of_expr id) ^ "] = " ^ result) :: []
 	  | PyIf(e1, s1, s2) ->  
 	  let rb = string_of_expr e1 in 
 	  		match s2 with
