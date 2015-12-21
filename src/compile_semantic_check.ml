@@ -20,7 +20,7 @@ let env = ref {
 
 (*translate geoAst to pyAst*)
 let translate (declarations, statements) = 
- let ini_env = {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt} in
+ (*let ini_env = {vars = env.contents.vars; funcs = env.contents.funcs; get_call = ""; func_opt = env.contents.func_opt} in*)
 	let rec py_of_expr = function
 	    Int(l) -> (PyInt(l), "int")
 	  | Float(l) -> (PyFloat(l), "float")
@@ -125,7 +125,7 @@ in let para_type fn paras_types = env := {vars = env.contents.vars; funcs = env.
 	                                 List.map para_var fdecl.paras;
 	                                  para_type (":" ^ fdecl.fname) (List.map snd fdecl.paras);
 	                                  let ans = {pyfname = fdecl.fname; pyparas = List.map fst fdecl.paras; pybody = translate_stmts fdecl.body} in 
-	                                  (env := ini_env; ans))
+	                                  (*(env := ini_env; ans)*)ans )
 
 
 	in let rec translate_funcs = function
