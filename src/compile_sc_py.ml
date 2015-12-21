@@ -158,11 +158,17 @@ let translate (declarations, statements) =
 
 	  	  let result1 = py_of_expr e1 and result2 = py_of_expr e2 in
 
-	  	  let digit_op_match op a b = if (((a="string"||a="int"||a="float")&&a=b)||a="list_ele"||b="list_ele") then (true, a) else if ((a="float" && b="int")||(a="int" && b="float")) then (true, "float") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in
+	  	  let digit_op_match op a b = 
 
-	  	  let eq_op_match op a b = if (((a=b&&(a="string"||a="int"||a="float"||a="bool"||a="char"))&&a=b)||a="list_ele"||b="list_ele") then (true, "bool") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in 
+	  	  if (((a="string"||a="int"||a="float")&&a=b)||a="list_ele"||b="list_ele") then (true, a) else if ((a="float" && b="int")||(a="int" && b="float")) then (true, "float") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in
 
-	  	  let bool_op_match op a b = if (((a=b && a="bool")&&a=b)||a="list_ele"||b="list_ele") then (true, "bool") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in 
+	  	  let eq_op_match op a b = 
+
+	  	  if (((a=b&&(a="string"||a="int"||a="float"||a="bool"||a="char"))&&a=b)||a="list_ele"||b="list_ele") then (true, "bool") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in 
+
+	  	  let bool_op_match op a b = 
+
+	  	  if (((a=b && a="bool")&&a=b)||a="list_ele"||b="list_ele") then (true, "bool") else raise(Failure("Undefined Operation: " ^ a ^ op ^ b)) in 
 
 	      let get_type_bi o = 
 
@@ -262,7 +268,7 @@ let translate (declarations, statements) =
 
 	  in  let func_opt_types = StringMap.find (gtc ^ ":" ^ f) env.contents.func_opt 
 
-	in    let opt_match a b = if (a=b) then true else if (b="int" && a="float") then true else if (a="any"||b="list_ele") then true else if (a="shape"&&(b="dot"||b="line"||b="circle")) then true else false
+	in    let opt_match a b = if (a=b) then true else if (b="int" && a="float") then true else if (a="any"||b="list_ele") then true else if (a="shape"&&(b="dot"||b="line"||b="circle"||b="polygon")) then true else false
 
 in        let opts_match a b = if (List.for_all2 opt_match a b) then true else raise(Failure("Fuction Parameter Not Match\n" ^ "Required " ^ gtc ^ ":" ^ f ^ "(" ^ (String.concat "," func_opt_types) ^ ")\n" ^ "Get " ^gtc ^ ":" ^ f ^ "(" ^ (String.concat "," (List.map snd result_el)) ^ ")"))
 

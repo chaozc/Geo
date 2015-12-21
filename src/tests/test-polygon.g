@@ -13,6 +13,7 @@ print(p1.getSides());
 print(p1.intersect([5,6]));
 print(p1.intersect(line([0,0],[2,2])));
 print(p1.intersect(circle([0,0],3)));
+print(p1.intersect(p2));
 @end
 
 /*
