@@ -40,7 +40,7 @@ let translate (declarations, statements) =
 	in let rec string_of_stmt = function
 		PyExpr(e) -> (string_of_expr e)  :: []
 	  | PyPrintT(expr) -> ("print " ^ (string_of_expr expr)) :: []
-	  | PyPrint(expr) -> ("msg.insert(tk.END," ^ (string_of_expr expr) ^ ")") :: []
+	  | PyPrint(expr) -> ("print " ^ (string_of_expr expr)) :: []
 	  | PyWhile(e, s) -> let rb = string_of_expr e in ("while (" ^ rb ^ "):"):: (List.map addTab (List.concat ((List.map string_of_stmt s))))
 	  | PyFor(e1, e2, s) -> 
 	  let r1 = string_of_expr e1 and r2 = string_of_expr e2 in 
