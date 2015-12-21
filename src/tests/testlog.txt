@@ -1,0 +1,7 @@
+Log:
+
+test-comparison.g
+expect:
+
+printT("str"=="str");
+printT('c'<'e');
