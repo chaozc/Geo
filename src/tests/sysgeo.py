@@ -464,12 +464,15 @@ class runset:
 	def __init__(self,runtime,sleeptime=None):
 		self.objlist = []
 		self.paralist = []
+		self.marklist = []
 		self.runtime = runtime
 		self.runenable = True
 		if(sleeptime is None):
 			self.sleeptime=0.5
 		else:
 			self.sleeptime = sleeptime
+	#def mark(self,p):
+	#	if (list)
 	def addPara(self,obj,para):
 		self.objlist.append(obj)
 		self.paralist.append(para)
