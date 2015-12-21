@@ -471,8 +471,9 @@ class runset:
 			self.sleeptime=0.5
 		else:
 			self.sleeptime = sleeptime
-	#def mark(self,p):
-	#	if (list)
+	def mark(self,p):
+		if (not (p in self.marklist)):
+			self.marklist.append(p)
 	def addPara(self,obj,para):
 		self.objlist.append(obj)
 		self.paralist.append(para)
