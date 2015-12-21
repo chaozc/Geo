@@ -436,17 +436,29 @@ class polygon(object):
 	def getPoints(self):
 		return self.allpoints
 	def getArea(self):
-		return self.polygon_.area()
+		return self.polygon_.area
 	def getAngle(self):
-		return self.polygon_.angles()
+		return self.polygon_.angles
 	def getParimeter(self):
-		return self.polygon_.perimeter()
+		return self.polygon_.perimeter
 	def getCentroid(self):
-		return dot(self.polygon_.centroid())
+		return dot(self.polygon_.centroid)
 	def getSides(self):
-		return self.polygon_.sides()
+		tm=[]
+		for i in self.polygon_.sides:
+			tm.append(line(i.points[0],i.points[1],i.points[0].x,i.points[1].x))
+		return tm
 	def intersect(self,obj):
-		olist = intersection(self, obj)
+		if(isinstance(obj,line)):
+			olist = self.polygon_.intersection(obj.line_)
+		elif(isinstance(obj,circle)):
+			olist = self.polygon_.intersection(obj.circle_)
+		elif(isinstance(obj,polygon)):
+			olist = self.polygon_.intersection(obj.polygon_)
+		elif(isinstance(obj,GeometryEntity)):
+			olist = self.polygon_.intersection(obj)
+		else:
+			return None
 		temp = []
 		for o in olist:
 			if(isinstance(o,Segment)):
