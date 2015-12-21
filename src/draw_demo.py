@@ -22,8 +22,8 @@ def draw(args):
 				d2=transaxis(Point(10,args.getY(10)))
 			else:
 				tx = float(args.line_.points[0].x)
-				d1=transaxis(tx,-10)
-				d2=transaxis(tx,10)
+				d1=transaxis(dot(tx,-10))
+				d2=transaxis(dot(tx,10))
 		else:
 			d1=transaxis(args.line_.points[0])
 			d2=transaxis(args.line_.points[1])
@@ -49,7 +49,7 @@ def delete():
 	runfun__(runsets)
 	if(runsets.run()):
 		#print runsets.runtime
-		w.after(int(runsets.sleeptime*1000),delete)
+		w.after(int(runsets.sleeptime*100),delete)
 
 def drawmain(runs):
 	global w
@@ -64,7 +64,7 @@ def drawmain(runs):
 	for argv in runsets.objlist:
 		draw(argv)
 
-	w.after(100, delete)
+	w.after(10, delete)
 
 	mainloop()
 	return True
