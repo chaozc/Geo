@@ -1,5 +1,6 @@
 from sympy.geometry import *
 from sympy.geometry.line import LinearEntity
+from sympy.geometry.entity import GeometryEntity
 from time import sleep
 from math import sqrt,pi,cos,sin,tan
 
@@ -13,28 +14,30 @@ class dot(Point):
 			Point.__init__(self,x,y)
 		self.runStep = [0,0]
 	def __str__(self):
-		retstr = '['+str(self.x)+','+str(self.y)+']'
+		x = "%.5f" % float(self.x)
+		y = "%.5f" % float(self.y)
+		retstr = '['+x+','+y+']'
 		return retstr
 	__repr__ = __str__
 	def getX(self):
 		return self.x
 	def getY(self):
 		return self.y
-	def getRunstep(self,pos):
-		if(pos == 'x'):
-			return self.runStep[0]
-		elif(pos == 'y'):
-			return self.runStep[1]
-	def setRunstep(self,pos,val):
-		if(pos == 'x'):
-			self.runStep[0]=val
-		elif(pos == 'y'):
-			self.runStep[1]=val
-	def renew(self,pos):
-		if(pos == 'x'):
-			self.x = self.x + self.runStep[0]
-		elif(pos == 'y'):
-			self.y = self.y + self.runStep[1]
+	# def getRunstep(self,pos):
+	# 	if(pos == 'x'):
+	# 		return self.runStep[0]
+	# 	elif(pos == 'y'):
+	# 		return self.runStep[1]
+	# def setRunstep(self,pos,val):
+	# 	if(pos == 'x'):
+	# 		self.runStep[0]=val
+	# 	elif(pos == 'y'):
+	# 		self.runStep[1]=val
+	# def renew(self,pos):
+	# 	if(pos == 'x'):
+	# 		self.x = self.x + self.runStep[0]
+	# 	elif(pos == 'y'):
+	# 		self.y = self.y + self.runStep[1]
 	def distance(self,adot):
 		return float(Point.distance(self,adot))
 
@@ -72,18 +75,34 @@ class line(object):
 			else:
 				self.a = float(a)
 				self.b = float(b)
-				self.line_=Segment(Point(end_point_1, self.a * end_point_1 + self.b), Point(end_point_2, self.a * end_point_2 + self.b)) 
-			if(b.x!=a.x):
+				if(a!=float('inf')):
+					self.line_=Segment(Point(end_point_1, self.a * end_point_1 + self.b), Point(end_point_2, self.a * end_point_2 + self.b)) 
+				else:
+					self.line_=Segment(dot(0,-1),dot(0,1))
+			if(a!=float('inf')):
 				self.end_point_1=min(end_point_1,end_point_2)
 				self.end_point_2=max(end_point_1,end_point_2)
 			else:
 				self.end_point_1=self.end_point_2=a.x
 		self.runStep = [0,0,0]
 	def __str__(self):
+		a = "%.5f" % self.a
+		b = "%.5f" % self.b
 		if(self.isLine):
-			retstr = 'line y='+str(self.a)+'x+'+str(self.b)
+			if(self.a!=float('inf')):
+				retstr = 'line y='+a+'x+'+b
+			else:
+				retstr = 'line x='+self.line_.points[0].x
 		else:
-			retstr = 'Segment y='+str(self.a)+'x+'+str(self.b)+' with x in ['+str(self.end_point_1)+','+str(self.end_point_2)+']'
+			end_point_1= "%.5f" % float(self.end_point_1)
+			end_point_2= "%.5f" % float(self.end_point_2)
+			if(self.a!=float('inf')):
+				retstr = 'segment y='+a+'x+'+b+' with x in ['+end_point_1+','+end_point_2+']'
+			else:
+				x="%.5f" % float(self.line_.points[0].x)
+				y1="%.5f" % float(self.line_.points[0].y)
+				y2="%.5f" % float(self.line_.points[1].y)
+				retstr = 'segment x='+x+' with y in ['+min(y1,y2)+','+max(y1,y2)+']'
 		return retstr
 	__repr__ = __str__
 	def getPara(self,pos):
@@ -197,7 +216,7 @@ class line(object):
 				templine = line(self.a, self.b)
 				self.end_point_1 = float(templine.pointAway(dotM,-self.line_.length/2).x)
 				self.end_point_2 = float(templine.pointAway(dotM, self.line_.length/2).x)
-			if(pose == 'x'):
+			if(pos == 'x'):
 				self.end_point_1 = self.end_point_1 + self.runStep[2]
 				self.end_point_2 = self.end_point_2 + self.runStep[2]
 			self.line_=Segment(Point(self.end_point_1, self.a * self.end_point_1 + self.b), Point(self.end_point_2, self.a * self.end_point_2 + self.b)) 
@@ -205,14 +224,17 @@ class line(object):
 		if(self.a == float('inf')):
 			return None
 		if(self.isLine or self.line_.contains(Point(x,float(self.a*x)+self.b))):
-			return self.a*x+self.b
+			res = "%.5f" % (self.a*x+self.b)
+			return res
 		else:
 			return None
 	def getX(self,y):
 		if(self.a == float('inf')):
-			return line_.points[0].x
+			res = "%.5f" % (self.line_.points[0].x)
+			return res
 		if(self.isLine or self.line_.contains(Point((y-self.b)/self.a,y))):
-			return (y-self.b)/self.a
+			res = "%.5f" % ((y-self.b)/self.a)
+			return res
 		else:
 			return None
 	def contains(self,p):
@@ -226,34 +248,50 @@ class line(object):
 		else:
 			return dot(self.line_.midpoint)
 	def getEndpoints(self):
-		if(isLine):
+		if(self.isLine):
 			return None
 		else:
-			return list(self.line_.points)
+			p = self.line_.points
+			op = []
+			for ele in p:
+				op.append(dot(ele))
+			return op
+
 	def length(self):	# Segment ONLY
 		if(self.isLine):
 			return 0
 		else:
-			return float(self.line_.length)
+			res = "%.5f" % (self.line_.length)
+			return res
 	def distance(self,p):
 		if(isinstance(p,Point)):
-			return float(self.line_.distance(p))
+			res = "%.5f" % (self.line_.distance(p))
+			return res
 		else:
 			return None
 	def pointAway(self,p,dis):
-		deltax = sqrt((dis**2)/(self.a**2+1))
-		if(dis < 0):
-			deltax=-deltax
-		finalx=p.x+float(deltax)
-		finaly=self.getY(finalx)
-		if(self.isLine or self.line_.contains(Point(finalx,finaly))):
-			return dot(finalx,finaly)
-		else:
+		if(not self.line_.contains(p)):
 			return None
+		if(self.a!=float('inf')):
+			deltax = sqrt((dis**2)/(self.a**2+1))
+			if(dis < 0):
+				deltax=-deltax
+			finalx=p.x+float(deltax)
+			finaly=self.getY(finalx)
+			if(self.isLine or self.line_.contains(Point(finalx,finaly))):
+				return dot(finalx,finaly)
+			else:
+				return None
+		else:
+			finaly = p.y+dis
+			if(self.isLine or self.line_.contains(Point(p.x,finaly))):
+				return dot(p.x,finaly)
+			else:
+				return None
 	def isParallel(self,aline):
-		if(isinstance(a,Line)):
+		if(isinstance(aline,Line)):
 			return Line.is_parallel(self.line_, aline)
-		elif(isinstance(a,line)):
+		elif(isinstance(aline,line)):
 			return Line.is_parallel(self.line_, aline.line_)
 		return None
 	def intersect(self, geo_object):
@@ -304,7 +342,8 @@ class circle(object):
 	def getCenter(self):
 		return self.center
 	def getRadius(self):
-		return self
+		res = "%.5f" % self.radius
+		return res
 	def setCenter(self,a):
 		if(isinstance(a,Point)):
 			self.center = a
@@ -419,7 +458,7 @@ class runset:
 		self.objlist = []
 		self.paralist = []
 		self.runtime = runtime
-		self.runenable = False
+		self.runenable = True
 		if(sleeptime is None):
 			self.sleeptime=0.5
 		else:
@@ -442,9 +481,9 @@ class runset:
 			obj.renew(self.paralist[index])
 			index = index + 1
 	def enableRun(self):
-		runenable=True
+		self.runenable=True
 	def disableRun(self):
-		runenable=False
+		self.runenable=False
 	def run(self):
 		sleep(self.sleeptime)
 		if(self.runenable and (self.runtime != 0)):
