@@ -48,14 +48,14 @@ rule token = parse
 | "for" { FOR }			
 | "function" {FUNCTION}	| "if" { IF }
 | "import" { IMPORT } 	| "in" { IN }
-| "list" { LIST }		| "break" { BREAK }
+| "polygon" { POLYGON }		| "break" { BREAK }
 | "model" {MODEL}		| "return" { RETURN }
 | "run" {RUN}			| "const" { CONST }
 | "submodel" {SUBMODEL}	| "line" {LINE}
 | "while" { WHILE }     | "circle" {CIRCLE}
 | "runset" { RUNSET }
 
-| ("int"|"float"|"dot"|"void"|"bool"|"char"|"string") as tp {TYPE(tp)} (* Type *)
+| ("int"|"float"|"dot"|"void"|"bool"|"char"|"string"|"list") as tp {TYPE(tp)} (* Type *)
 
 | "print" {PRINT}
 | "printT" {PRINTT}

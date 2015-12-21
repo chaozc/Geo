@@ -10,6 +10,7 @@ import time
 import string
 import sys
 
+
 class DrawingAreaExample:
     def __init__(self):
         window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -75,6 +76,9 @@ class DrawingAreaExample:
         i = 0
         try:
             while args[i]:
+
+                self.area.queue_draw()
+
                 if (args[i] == 'line'):
                     self.draw_line(int(args[i+1]), int(args[i+2])) # slope and intercept
                     i += 3
@@ -88,7 +92,6 @@ class DrawingAreaExample:
                     self.draw_arcs(int(args[i+1]), int(args[i+2]), int(args[i+3])) # center and radius
                     i += 4
                 elif (args[i] == 'polygon'):
-                    # gtk.Widget.queue_draw()
                     i += 1
                     vertices = []
                     try:
@@ -114,6 +117,7 @@ class DrawingAreaExample:
 
     def draw_line(self, a, b):
         self.area.window.draw_line(self.gc, 0, b, -b/a, 0)
+        # self.area.window.draw_line(self.gc, 0, globalxxx, globalxxx, 0)
         self.pangolayout.set_text("Line")
         self.area.window.draw_layout(self.gc, a+5, b+50, self.pangolayout)
         return

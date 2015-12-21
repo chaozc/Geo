@@ -13,16 +13,16 @@ type expr =
 	| Char of char
 	| Id of string
 	| Binop of expr * op * expr
-	| Assign of string * expr
   	| Call of string * expr list
   	| Dot of expr * expr
   	| Get_Call of expr * expr
   	| Line of expr list
   	| Circle of expr list
   	| List of expr list
+  	| Polygon of expr list
   	| Not of expr
   	| Minus of expr
-  	| ListEle of expr * expr
+  	| ListEle of string * expr
   	| Runset of expr list
 
 
@@ -35,6 +35,7 @@ type stmt =
 	| Print of expr
 	| PrintT of expr
 	| Run of expr * stmt list
+	| Assign of string * expr * expr
 
 
 type fdecl = {

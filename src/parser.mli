@@ -33,7 +33,6 @@ type token =
   | FOR
   | FUNCTION
   | IMPORT
-  | LIST
   | MODEL
   | RETURN
   | RUN
@@ -44,6 +43,7 @@ type token =
   | LINE
   | CIRCLE
   | RUNSET
+  | POLYGON
   | TYPE of (string)
   | PRINT
   | PRINTT
