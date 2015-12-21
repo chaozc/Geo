@@ -1,5 +1,6 @@
 @panel panel1
-a=b=3;
+a=3;
+b=3
 c=123e-1;
 d="Ocaml sucks!";
 e='@';
