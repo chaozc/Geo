@@ -1,0 +1,592 @@
+commit 010405f8865a579145149643400ffd5e7f566fa5
+Author: Qi Wang <wang.qi@columbia.edu>
+Date:   Mon Dec 21 18:23:47 2015 -0500
+
+    add final final ppt
+
+commit 5ce5019d9b2c2358d298349a61863194bc2e776b
+Author: Qi Wang <wang.qi@columbia.edu>
+Date:   Mon Dec 21 18:20:28 2015 -0500
+
+    add ppt pdf
+
+commit 3821402449cedaa8926b8cdbd7f12ff681cb21c8
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Mon Dec 21 17:35:32 2015 -0500
+
+    FINAL FINAL ppt
+
+commit f1faebc79e6ad49f6073fbc309fe9160ff57a305
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Mon Dec 21 17:17:17 2015 -0500
+
+    BUGBUGBUG
+
+commit f1b41d62f0576948851425790b54d80b3612b747
+Author: Yuechen-Zhao <zhaoyuechen@dyn-160-39-179-18.dyn.columbia.edu>
+Date:   Mon Dec 21 17:07:11 2015 -0500
+
+    ppt final version
+    
+    hehe
+
+commit d2cbd5637eed029ccf5932ddca37689526be0e82
+Author: Yuechen-Zhao <zhaoyuechen@dyn-160-39-179-18.dyn.columbia.edu>
+Date:   Mon Dec 21 16:51:14 2015 -0500
+
+    ppt
+
+commit 46d7898ecbd6fbff132223870c7b1b947892a679
+Author: Yuechen-Zhao <zhaoyuechen@dyn-160-39-179-18.dyn.columbia.edu>
+Date:   Mon Dec 21 16:36:33 2015 -0500
+
+    ppt update
+    
+    hehehe
+
+commit 354fd045ba786b2d0488c98fe82aa21ed2871090
+Author: Yuechen-Zhao <zhaoyuechen@dyn-160-39-179-18.dyn.columbia.edu>
+Date:   Mon Dec 21 15:56:26 2015 -0500
+
+    Add code graph-ppt
+
+commit eb2a5322704424f5270884073ff2c3907bcb8a42
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Mon Dec 21 15:28:39 2015 -0500
+
+    Update geo shell for producing independent executable python code
+
+commit 8fbaa4ad0d37347b2e8d3f3af6a3a3b86f355468
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Mon Dec 21 14:40:55 2015 -0500
+
+    Clean older files and for better presentation
+
+commit 50a9b858ea5a2248f4de1d13e2b3d5d54de6b4a9
+Author: Qi Wang <wang.qi@columbia.edu>
+Date:   Mon Dec 21 12:17:33 2015 -0500
+
+    Update report and ppt
+
+commit 8d98d44fd4a5d0c228bfd58af9cbf9aa0566c781
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Mon Dec 21 07:50:29 2015 -0500
+
+    Updates all test sets
+
+commit 082076749ec07bf02c146f5346c50df84da45f64
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Mon Dec 21 05:56:29 2015 -0500
+
+    Update sysgeo.py
+
+commit ac3317afb04e67bc9ba3eafb866991b73060f96f
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Mon Dec 21 05:46:45 2015 -0500
+
+    polygon shape
+
+commit e9de5defcffd735b0dd6923243feba701ccfe058
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Mon Dec 21 04:59:50 2015 -0500
+
+    Demo 1 Done
+
+commit 5ee3c9d8b43f1f333c20995fbf4a98341171a891
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Mon Dec 21 04:08:19 2015 -0500
+
+    add rule
+
+commit 77cf3b40d3a471dc0f72d5cfe275602dfea95f5e
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Mon Dec 21 04:04:05 2015 -0500
+
+    insert
+
+commit 506494575f9cb4bdb19bbdef884de6d0bf5ef173
+Author: Qi Wang <wang.qi@columbia.edu>
+Date:   Mon Dec 21 03:49:56 2015 -0500
+
+    Presentation PPT
+
+commit 6d61734c0af2b37405ece4c33d3161bf62103c1c
+Author: Yuechen-Zhao <zhaoyuechen@dyn-160-39-179-18.dyn.columbia.edu>
+Date:   Mon Dec 21 02:38:46 2015 -0500
+
+    error checkings
+
+commit 0dcc80a158c22894ce4d0186dbf23cc4554c1e9a
+Author: Yuechen-Zhao <zhaoyuechen@dyn-160-39-179-18.dyn.columbia.edu>
+Date:   Mon Dec 21 02:06:23 2015 -0500
+
+    gui demo 1
+
+commit 90188e54712e0a97e9a0b72fab8015065f2b09e2
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Mon Dec 21 02:15:30 2015 -0500
+
+    rewrite run, break
+
+commit e4588f00a4d5c7659c8b13dc37a429368759a2b4
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Mon Dec 21 01:38:48 2015 -0500
+
+    polygon added
+
+commit c14f60d417d78c3fbf1c694805cc2ea572fc1fe6
+Merge: 72a57d8 8fd94ba
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Mon Dec 21 01:32:14 2015 -0500
+
+    Merge branch 'master' of github.com:chaozc/Geo
+
+commit 72a57d888d628262576c17bd7fc0d97f4698349c
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Mon Dec 21 01:31:40 2015 -0500
+
+    list element fixed
+
+commit 8fd94baad3e63c235c444d2639308f31895aefe7
+Author: Yuechen-Zhao <zhaoyuechen@dyn-160-39-179-18.dyn.columbia.edu>
+Date:   Mon Dec 21 00:22:57 2015 -0500
+
+    Gui
+    
+    hahaha
+
+commit 4b6faf936d95a80de91fd8b19c3233b11b6bfd43
+Author: 江桐 <koukiri@dyn-129-236-238-220.dyn.columbia.edu>
+Date:   Sun Dec 20 23:00:04 2015 -0500
+
+    report
+
+commit 5f7cc71644deafa2ad3e15fe7ad82bdd16f5bc10
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 19:29:26 2015 -0500
+
+    getEndpoints added
+
+commit 47903b10fef2a7062bce21797ca02b2be78d3eac
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 19:27:29 2015 -0500
+
+    not found error fixed
+
+commit db3d59acb40951bec56d1abf1009312dea1dce1d
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 19:19:42 2015 -0500
+
+    hardcode removed & syslib updated
+
+commit 4d5786565aa59e0099d3678159cf8b889cee8623
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 19:07:48 2015 -0500
+
+    hardcode removed & syslib updated
+
+commit fe8dcf5df7b01ad9656c0f713daf8815bd4758b0
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 18:35:27 2015 -0500
+
+    func tab fixed, sysfunc updated, semantic check updated
+
+commit 2ab7d2a8b2c6a6fa9befc3a97873bd509d8ef3ff
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 16:53:25 2015 -0500
+
+    char eq
+
+commit 4ed4cb4c36c95042a99e84d8fdee56b53aa4e87a
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 16:52:45 2015 -0500
+
+    char eq
+
+commit 020981f7e099c9da15718c3e43ecc680bd60526f
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 16:38:52 2015 -0500
+
+    delete sympy
+
+commit f7151c6d900551ffc67a2e630052804113954a06
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 16:37:20 2015 -0500
+
+    tab fixed
+
+commit 910598c6992001af2d57a8b42261aecf50c37481
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 15:46:34 2015 -0500
+
+    and or<->eq neq
+
+commit eebb8adbc3539d290b6b3bafb4a6ea8a5d75c824
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 15:45:25 2015 -0500
+
+    python ast added
+
+commit 09f0e5fd0f65da7f57e853b3da246473a4f8adea
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sun Dec 20 13:20:32 2015 -0500
+
+    import sysgeo
+
+commit 198101f441966b042b7fb36c15472b5508df19c7
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sun Dec 20 02:32:17 2015 -0500
+
+    sysgeo - fix bugs in line.rotatebyarc
+
+commit b7100804d457382f5535663407cab1856c7db21e
+Merge: 60219f1 57b425b
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 22:41:15 2015 -0500
+
+    Merge branch 'master' of github.com:chaozc/Geo
+
+commit 60219f1a16c9a4b7d1a07d3408a455c2e14f394a
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 22:41:01 2015 -0500
+
+    for i check
+
+commit 57b425b66945fc25d6dbbc6711528f213957a2da
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sat Dec 19 22:32:42 2015 -0500
+
+    renew sysgeo -> Done without debug
+
+commit 6faae02b88dff8f200f9cb013e24089ddb675d53
+Merge: 295ab14 c4ef44d
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 22:02:27 2015 -0500
+
+    Merge branch 'master' of github.com:chaozc/Geo
+
+commit 295ab14228f4a6fe9cffe2106dd02f1d049e88d5
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 22:02:11 2015 -0500
+
+    list check
+
+commit c4ef44d3e5de5e11d88d598ae4d40ee86f09746b
+Author: Yuechen-Zhao <zhaoyuechen@dyn-160-39-133-196.dyn.columbia.edu>
+Date:   Sat Dec 19 21:52:38 2015 -0500
+
+    gtk graphical
+    
+    hehehe
+
+commit a459f319cf1d2b28c75cab3818f66500964d552b
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sat Dec 19 20:23:44 2015 -0500
+
+    Renew sysgeo.py
+
+commit e96f70031940729b20da6feae370fafb1777dc1c
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 20:22:13 2015 -0500
+
+    list
+
+commit 21ee233ce63a8d8d0743241e73cdf470f30994d9
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 19:09:07 2015 -0500
+
+    float, bool fixed
+
+commit 21ba6952ee1946792b73d0a89c4fb95aa3bc6b1f
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 18:46:39 2015 -0500
+
+    operator type check
+
+commit 16d0e96c49c48299be5f5443f6ec758bc77e64e6
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 16:45:24 2015 -0500
+
+    check function type
+
+commit a99f2028c2070a7c0861530e76ee00070bb329ac
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 16:07:17 2015 -0500
+
+    check function type
+
+commit 0b86400f0e680c3c1cea6877641b1a39bbacdd1a
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 15:55:06 2015 -0500
+
+    check function type
+
+commit b3aa7a3b8e9b0690a4cf7db2d073375769a30b3c
+Merge: 9fa758b 5f9f491
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 15:46:41 2015 -0500
+
+    Merge branch 'master' of github.com:chaozc/Geo
+
+commit 9fa758ba405d52a1a57cc3de9018606140d6828b
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 15:46:17 2015 -0500
+
+    check function type
+
+commit 5f9f491f5bde1ee017729087f43065fa356dec82
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sat Dec 19 15:08:33 2015 -0500
+
+    New update to sysgeo
+
+commit 20016a043e03e48d884e90bda5fb36763512eefa
+Merge: 17b0b0f b6a23ab
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 11:45:06 2015 -0500
+
+    merge
+
+commit 17b0b0fcd01f33cb19f637e149e5c6442991fdd3
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Dec 19 11:43:15 2015 -0500
+
+    check vars
+
+commit b6a23aba7149dd7bf4639fd5ce944249e6b06c16
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sat Dec 19 00:14:10 2015 -0500
+
+    geo geotype realisation - unfinished
+    
+    12/18/2015
+
+commit 748bacd67efe60fa41510f5908d402ed6b800d75
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Fri Dec 18 16:24:17 2015 -0500
+
+    bool
+
+commit 5f7bd3b2194733e94b5f06e4522de50861bbc056
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Fri Dec 18 16:23:29 2015 -0500
+
+    bool
+
+commit c09eedc8ffc8190ec4f56d7198644eb04f5b6470
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Fri Dec 18 15:10:08 2015 -0500
+
+    dot circle line
+
+commit 038a36f53fd2624bbb73a753d13be4cf318ffae0
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Fri Dec 18 11:12:23 2015 -0500
+
+    chaozc
+
+commit 616e282e41167e19e96a402e6f24305ee0b98c93
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Fri Dec 18 10:52:34 2015 -0500
+
+    printT
+
+commit fc61b503abcccd7deb7e198235aa89fd5a8a87f5
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sun Dec 6 22:05:02 2015 -0500
+
+    Update: compile .g using geo.sh 12/06/2015
+
+commit 997b54cd3ed9667e71a8097f5c76b84dc4f3a61a
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sun Nov 15 00:22:59 2015 -0500
+
+    Update src. Current version 1.1
+
+commit c72f7b3cead595a042df77a3de05e92dea28a58c
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Thu Nov 12 09:32:10 2015 -0500
+
+    Geo to python reference in compile.ml 11/12/2015
+
+commit 7eee2e471b3e63bd67ec2e8d0a004eefd2cb15a5
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Wed Nov 11 11:22:58 2015 -0500
+
+    Log of syntax and semantic changes
+
+commit 1d11eacb5c4e0f6501564a1ea23bb144d28b625e
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Tue Nov 10 22:29:33 2015 -0500
+
+    README
+
+commit 9c69df285eb0b59729d6904b29cd3d75ef6c4517
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Tue Nov 10 21:31:43 2015 -0500
+
+    Simple helloworld
+
+commit 026ff619fd00b3cc2ffb977fb1d4ed3db04733e2
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Tue Nov 10 00:19:17 2015 -0500
+
+    parser ast v1
+
+commit 1da0285f1c1c521f7d9d04dc73b9d5c7bb13a9f7
+Merge: 8d90fe9 006d8cb
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Mon Nov 9 22:47:56 2015 -0500
+
+    Merge branch 'master' of github.com:chaozc/Geo
+
+commit 8d90fe9f8697a7c225d46868ddc8612416756adc
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Mon Nov 9 22:46:39 2015 -0500
+
+    parser
+
+commit 006d8cb4401b2fb7fc20271c1ba7b03731993f45
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Mon Nov 9 18:59:15 2015 -0500
+
+    Update std.glib, current version v0.1 11/09/2015
+
+commit b880e5103ae801b94c7956c5952b1386dcaaf4c0
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Mon Nov 9 11:56:35 2015 -0500
+
+    Remove token '@' and add two CFGs 11/09/2015
+    
+    REMOVE
+    | '@' { AT }
+    ADD
+    | "@end" {ENDOFPROGRAM}
+    | '@'(['a' - 'z' 'A' - 'Z']+ as pre) {PRESET(pre)}
+
+commit 1047bb793c3ff11b869deb8fa7a67bbe1a093fb6
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sat Nov 7 22:34:55 2015 -0500
+
+    Increase token '@' 11/07/2015
+
+commit 46801b1f7eaf5cd8c4ea254e5375fcb1758061c2
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sat Nov 7 22:28:55 2015 -0500
+
+    Update scanner.mll 11/07/2015
+    
+    <int> INTEGER -> <int> INTEGERLIT
+    .etc
+
+commit a26968cc05ed7e72abe846a688b03595f556c471
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sat Nov 7 20:19:53 2015 -0500
+
+    Upload scanner 11/07/2015
+    
+    Lichen & Qi, please note the comment on the top of scanner.mll.
+
+commit 33c8c0eca445c9ba2e6ae00797af1922148bda90
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Nov 7 18:44:28 2015 -0500
+
+    src added
+
+commit be5dcfa1b37e5b7b216f2165ca78f823f49974d5
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Sat Nov 7 16:45:35 2015 -0500
+
+    microc sample
+
+commit 8c4af5c1de0d91e8fda4820c66b5839e47f279fa
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sat Nov 7 16:34:24 2015 -0500
+
+    Trivial action 11/07/2015
+    
+    Delete file "hello"
+
+commit f193478d19f23915946a28e4af1d6cff27446915
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Sat Nov 7 16:30:31 2015 -0500
+
+    Update LRM v1.1 11/07/2015
+    
+    In v1.1, Geo
+    1. increases keyword "void"
+    2. modifies (non-return-value) function definition.
+
+commit 9ca3d66442cc095af8749e04e0e3ff72527e7ad1
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Fri Nov 6 17:54:54 2015 -0500
+
+    Update 11/06/2015
+
+commit e7d29017141856abe1c77e6bcb10d6d1c84e2394
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Fri Nov 6 17:54:31 2015 -0500
+
+    Language Demo v0.0
+
+commit e2387b6e0942128963eeb25d946eb5137700cfad
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Fri Nov 6 17:46:01 2015 -0500
+
+    Geo std library 11/06/2015
+
+commit 5988bcff6f7ca9f32b4c7b48e7c4fff8f55ee7c1
+Author: Ziyi Luo <zl2471@columbia.edu>
+Date:   Fri Nov 6 17:41:33 2015 -0500
+
+    Reference doc renew 11/06/2015
+
+commit a571b1602f67df940075b7391362caca420b2327
+Author: 子仪_ <samluo@dyn-209-2-216-195.dyn.columbia.edu>
+Date:   Mon Sep 28 15:21:09 2015 -0400
+
+    Mod by Ziyi 09/28
+
+commit e6999a33e9697715c975eba1f27a39cd057e3845
+Author: Yuechen-Zhao <zhaoyuechen@dyn-160-39-178-121.dyn.columbia.edu>
+Date:   Fri Sep 25 16:47:51 2015 -0400
+
+    Proposal Draft
+    
+    A total draft… Please edit in google docs if its more convenient!
+
+commit f77dc63f8b5cf16fc0865e20bcd7909215c4070b
+Author: Yuechen-Zhao <zhaoyuechen@dyn-160-39-178-121.dyn.columbia.edu>
+Date:   Fri Sep 25 16:44:41 2015 -0400
+
+    Hi
+
+commit 12e4127e5c6d5aad6cb60056ed6c38e3b4a82846
+Author: Qi Wang <wang.qi@columbia.edu>
+Date:   Wed Sep 23 23:44:20 2015 -0400
+
+    Create hello
+
+commit 727c15962dfcc8e7fab64f20adbbc36cf68cc396
+Author: 子仪_ <samluo@ziyi-deMacBook-Pro.local>
+Date:   Wed Sep 23 23:40:24 2015 -0400
+
+    Ziyi adds a map of Columbia.
+
+commit eaace90218857c2ed4730022310452a6d4d1b0f3
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Wed Sep 23 23:02:49 2015 -0400
+
+    first geo file
+
+commit 38602f1aca8ffc03d95250344ca91b80d1f8af3c
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Wed Sep 23 22:50:33 2015 -0400
+
+    readme
+
+commit 4cb6d4fd7116a521c96cae76adf103561bb2f566
+Author: chaozc <zichen.chao@gmail.com>
+Date:   Wed Sep 23 15:38:09 2015 -0400
+
+    Initial commit
