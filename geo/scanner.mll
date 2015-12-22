@@ -47,15 +47,15 @@ rule token = parse
 | "else" { ELSE } 		| "end" { END }
 | "for" { FOR }			
 | "function" {FUNCTION}	| "if" { IF }
-| "import" { IMPORT } 	| "in" { IN }
+| "in" { IN }
 | "polygon" { POLYGON }		| "break" { BREAK }
-| "model" {MODEL}		| "return" { RETURN }
-| "run" {RUN}			| "const" { CONST }
-| "submodel" {SUBMODEL}	| "line" {LINE}
+| "return" { RETURN }
+| "run" {RUN}
+| "line" {LINE}
 | "while" { WHILE }     | "circle" {CIRCLE}
 | "runset" { RUNSET }
 
-| ("int"|"float"|"dot"|"void"|"bool"|"char"|"string"|"list") as tp {TYPE(tp)} (* Type *)
+| ("int"|"float"|"void"|"bool"|"char"|"string"|"list") as tp {TYPE(tp)} (* Type *)
 
 | "print" {PRINT}
 | "printT" {PRINTT}

@@ -27,16 +27,12 @@ type token =
   | AND
   | OR
   | BREAK
-  | CONST
   | ELSE
   | END
   | FOR
   | FUNCTION
-  | IMPORT
-  | MODEL
   | RETURN
   | RUN
-  | SUBMODEL
   | WHILE
   | IF
   | IN
