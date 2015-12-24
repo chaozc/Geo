@@ -5,5 +5,3 @@ Project of COMS W4115 Columbia University
 Instructor: Stephen A. Edwards
 
 test Branch: For all static & dymantic tests of Geo syntax & semantic properties
-
-hahahaa
