@@ -1,0 +1,157 @@
+/**************************************
+  Standard library of Geo
+  file name: std.glib
+  Preread by Geo compiler each time 
+  before compiling a Geo program.
+  Part a: System constant declaration
+  Pard b: System function declaration
+  Part c: Geometric function declaration
+  Current version: v0.1
+  Modification time: 11/09/2015
+**************************************/
+
+//part a: System constant declaration
+
+PI = 3.141592653589793;
+
+/*//part b: System function declaration
+
+function print(info:int const, ...):void;
+function print(info:float const, ...):void;
+function print(info:char const, ...):void;
+function print(info:bool const, ...):void;
+function print(info:string const, ...):void;
+
+function int_to_string(input:int):string;
+function float_to_string(input:float):string;
+function bool_to_string(input:bool):string;
+function char_to_string(input:char):string;
+
+//part c: Geometric function declaration
+
+//controltype runset
+model runset: 
+	runEnable:bool;
+	times_of_run:int;
+	shape[]:geometricShape;
+	runpara[]:char;
+	
+	runset(times_of_run:int, g1:geometricShape, run_para_g1:char, ...);
+	
+	function refresh():void;
+	function addElement():bool;
+	function removeElement(g:geometricShape,para:char):bool;
+	function enableRun():void;
+	function disableRun():void;
+
+end
+
+model geometricShape:
+	step[]:float;
+	stepSet[]:bool;
+	geometricShape();
+end
+
+
+//geometricShape submodel: dot
+//dot parameter name: 'x' 'y'
+model dot:
+	topmodel(geometricShape);
+	
+	step[2]:float;
+	stepSet[2]:bool;
+
+     dot(x:float, y:float);
+
+	function getX():float;
+	function getY():float;
+
+	function distance(dot1:dot const):float;
+	function distance(line1:line const):float;
+
+	function setRunstep(val:float,pos:char):void;
+	function getRunstep(pos:char const):float;
+
+end
+
+//geometricShape submodel: line
+//line parameter name: 'a' 'b'
+//line formula y = ax + b
+model line:
+	topmodel(geometricShape);
+	step[2]:float;
+	stepSet[2]:bool;
+
+	endPoint[2]:dot;
+	endPointset:bool;
+
+	a:float;
+	b:float;
+
+	line(a:float,b:float);
+	line(dot1:dot,dot2:dot);
+	line(a:float,b:float,endpointx1:float,endpointx2:float);
+	line(dot1:dot,dot2:dot,endpointx1:float,endpointx2:float);
+
+	function getPara(pos:char const):float;
+	function getY(x:float const):float; //Exception may occur.
+
+	//If endPointset = false, return [0,0]
+	function getMidpoint():dot;
+
+	function setRunstep(val:float,pos:char):void;
+	function getRunstep(pos:char char):float;
+
+	function intersect(polygon1:polygon const):float[];
+	function intersect(circle1:circle const):float[];
+end
+
+//geometricShape submodel: circle
+//circle parameter name: 'a' 'b' 'r'
+//circle formula r^2 = (x-a)^2 + (y-b)^2
+model circle:
+	topmodel(geometricShape);
+
+	step[3]:float;
+	stepSet[3]:bool;
+	a:float;
+	b:float;
+	r:float;
+
+	circle(center:dot,radius:float);
+
+	function setRunstep(val:float,pos:char):void;
+	function getRunstep(pos:char):float;
+
+	function getCenter():dot;
+	function getRadius():float;
+	//Out_of_range Exception may occur.
+	function getY(x:float const):float[]; 
+	function intersect(polygon1:polygon const):float[];
+	function intersect(circle1:circle const):float[];
+end
+
+//geometricShape submodel: polygons
+//polygons parameter name: 'a' 'b' ...
+//polygons formula: A set of dots
+model polygons:
+	topmodel(geometricShape);
+
+	step[]:float;
+	stepSet[]:bool;
+
+	apexs[]:dot;
+
+	polygons(num_of_apex:int,apex[]:dot);
+
+	function setRunstep(val:float,pos:char):void;
+	function getRunstep(pos:char):float;
+
+	function getCenter():dot;
+	function getRadius():float;
+	//Out_of_range Exception may occur.
+	function getY(x:float const):float[]; 
+	function intersect(polygon1:polygon):float[];
+end
+
+// End of std.glib*/
